@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strings in JS</title>
+</head>
+<body>
+    
+    <script>
+        let tweet = prompt("Enter Tweet");
+        let new_tweet = tweet.slice(0, 140);
+        let tweetLength = new_tweet.length;
+        
+        alert(
+            "you have written " + tweetLength + " characters, you have " + (140 - tweetLength) + " characters left.\n\n" + new_tweet);
+
+    </script>
+</body>
+</html>

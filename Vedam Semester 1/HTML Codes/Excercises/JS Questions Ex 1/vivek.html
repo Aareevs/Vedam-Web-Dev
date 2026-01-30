@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .container {
+        background-color: red;
+        padding: 10px 10px 10px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      .boxes {
+        background-color: lightblue;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 340px;
+        justify-content: center;
+        display: block;
+      }
+      .b1 {
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .b2 {
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .b3 {
+        display: flex;
+        justify-content: space-evenly;
+      }
+      #btn {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Vedam School Of Technology</h2>
+      <h2>Campus Pune</h2>
+      <div class="boxes">
+        <div class="b1">
+          <p>College Id</p>
+          <p>1234 Abc</p>
+        </div>
+        <div class="b2">
+          <p>Location</p>
+          <p>Near lohegoan
+          </p>
+        </div>
+        <div class="b3">
+          <p>CPincode</p>
+          <p>1234876</p>
+        </div>
+      </div>
+      <br />
+      <div id="btn">
+        <button >Select Campus</button>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const button = document.querySelector('#btn button');
+    const boxes = document.querySelector('.boxes');
+    if (button && boxes) {
+      button.addEventListener('click', () => {
+        const isVisible = boxes.style.display !== 'none';
+        if (isVisible) {
+          boxes.style.display = 'none';
+          button.textContent = 'Show Campus';
+        } else {
+          boxes.style.display = 'block';
+          button.textContent = 'Hide Campus';
+        }
+      });
+    }
+  </script>
+</html>

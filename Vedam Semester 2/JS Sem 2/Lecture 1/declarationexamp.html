@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <Script>
+        // Function Declaration
+
+function greet(a){
+    //console.log("Hello", arguments[0]);
+    for(let i=0; i<arguments.length; i++){
+    console.log(i, arguments[i]); 
+}
+}
+
+greet(1,2,3,4,"ABC",true,11);
+
+function noOfArg() {
+    console.log(arguments.length);
+}
+noOfArg();
+
+//2 Using Rest Operator
+
+  function findArg(a,b,...arg) {
+    //print all arguments
+    console.log(a,b,arg)
+  }
+  findArg(1,2,5,6,7,8,"apple")
+
+    </Script>
+</body>
+</html>

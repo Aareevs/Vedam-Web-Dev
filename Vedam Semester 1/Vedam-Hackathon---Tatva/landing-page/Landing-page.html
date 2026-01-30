@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatva 2025 | Tech Fest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Syncopate:wght@700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* CSS Reset and Base Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        
+        /* Festival Mode Toggle */
+        .festival-mode-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                box-shadow: 0 0 20px 5px rgba(255, 165, 0, 0.8);
+            }
+            20%, 24%, 55% { 
+                box-shadow: 0 0 5px 2px rgba(255, 165, 0, 0.3);
+            }
+        }
+        #fest-mode {
+            position: absolute;
+            opacity: 0;
+            height: 0;
+            width: 0;
+        }
+        .festival-toggle-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(20, 20, 30, 0.7);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 113, 25, 0.3);
+        }
+        .festival-toggle-label::before {
+            content: '🪔';
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        #fest-mode:checked + .festival-toggle-label {
+            background: rgba(227, 113, 25, 0.7);
+            box-shadow: 0 0 20px rgba(227, 113, 25, 0.6);
+        }
+        
+        /* Festival Mode Effects */
+        #fest-mode:checked ~ * {
+            --festival-bg: linear-gradient(to bottom, #1a0f00, #2d1a08);
+            --festival-glow: 0 0 15px rgba(255, 165, 0, 0.7);
+            --festival-text: #ffd700;
+        }
+        
+        #fest-mode:checked ~ * h1,
+        #fest-mode:checked ~ * h2,
+        #fest-mode:checked ~ * h3 {
+            color: var(--festival-text, #ffd700);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: shimmer 3s infinite alternate;
+        }
+        
+        #fest-mode:checked ~ * .diya-flame,
+        #fest-mode:checked ~ * .auto-floating-diya .diya-flame {
+            animation: flicker 2s infinite alternate;
+            box-shadow: 0 0 20px 5px rgba(255, 165, 0, 0.8);
+        }
+        
+        #fest-mode:checked ~ * .nav-container {
+            background: var(--festival-bg, linear-gradient(to bottom, #1a0f00, #2d1a08));
+        }
+        
+        #fest-mode:checked ~ * .hero-section {
+            background: var(--festival-bg, linear-gradient(to bottom, #1a0f00, #2d1a08));
+        }
+        
+        @keyframes shimmer {
+            0% {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 165, 0, 0.6);
+            }
+        }
+        
+        /* Timeline Section Styles */
+        .timeline-section {
+            padding: 80px 20px;
+            background: #0a0a14;
+            position: relative;
+        }
+        
+        .timeline-heading {
+            text-align: center;
+            margin-bottom: 50px;
+            font-family: 'Orbitron', sans-serif;
+            color: #e37119;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #e37119, transparent);
+        }
+        
+        .timeline-dots {
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ffd700;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .timeline-dot:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+        
+        .timeline-dot::after {
+            content: attr(data-year);
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #e37119;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+        }
+        
+        .timeline-milestones {
+            position: relative;
+        }
+        
+        .milestone {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .milestone:target {
+            opacity: 1;
+            height: auto;
+            padding: 30px;
+            margin: 20px 0;
+            background: rgba(10, 10, 20, 0.8);
+            border: 1px solid #e37119;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(227, 113, 25, 0.3);
+        }
+        
+        .milestone-heading {
+            font-family: 'Orbitron', sans-serif;
+            color: #e37119;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .milestone-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #e37119;
+        }
+        
+        .milestone-content {
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .sanskrit-style {
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 1px;
+            font-weight: 500;
+            color: #ffd700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        }
+        
+        /* Responsive Timeline */
+        @media (max-width: 768px) {
+            .timeline-container::before {
+                left: 30px;
+            }
+            
+            .timeline-dots {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 50px;
+                margin-left: 30px;
+            }
+            
+            .timeline-dot::after {
+                top: 0;
+                left: 40px;
+                transform: none;
+            }
+        }
+        #fest-mode:checked + .festival-toggle-label::before {
+            transform: scale(1.2);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+        
+        /* Festival Mode Styles */
+        #fest-mode:checked ~ * .diya {
+            filter: brightness(1.5) drop-shadow(0 0 10px gold);
+        }
+        #fest-mode:checked ~ * .diya::after {
+            animation: flicker 2s infinite alternate;
+        }
+        #fest-mode:checked ~ body {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        }
+        #fest-mode:checked ~ * .section-title {
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.7); }
+            100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        }
+        
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { filter: brightness(1.5) drop-shadow(0 0 15px gold); }
+            20%, 24%, 55% { filter: brightness(1.2) drop-shadow(0 0 5px gold); }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Ensure hero section appears first */
+        #home {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Gallery section positioning */
+        #gallery {
+            position: relative;
+            z-index: 0;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        /* Ensure page starts at top */
+        html, body {
+            scroll-padding-top: 0;
+        }
+
+        h1, h2, h3, .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Loader Animation */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+            animation: hideLoader 2s forwards;
+        }
+        
+        @keyframes hideLoader {
+            0%, 80% {
+                opacity: 1;
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+        }
+        
+        .loader-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .mandala-loader {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+        
+        .mandala-circle {
+            position: absolute;
+            border: 3px solid transparent;
+            border-radius: 50%;
+        }
+        
+        .mandala-circle:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            border-top-color: #e37119;
+            animation: spin 2s linear infinite;
+        }
+        
+        .mandala-circle:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 10px;
+            left: 10px;
+            border-right-color: #8b5cf6;
+            animation: spin 1.8s linear infinite reverse;
+        }
+        
+        .mandala-circle:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 20px;
+            left: 20px;
+            border-bottom-color: #e37119;
+            animation: spin 1.5s linear infinite;
+        }
+        
+        .mandala-circle:nth-child(4) {
+            width: 60px;
+            height: 60px;
+            top: 30px;
+            left: 30px;
+            border-left-color: #8b5cf6;
+            animation: spin 1.2s linear infinite reverse;
+        }
+        
+        .mandala-center {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 40px;
+            left: 40px;
+            background: radial-gradient(circle, #e37119, #8b5cf6);
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        /* Floating Diyas/Lanterns Animation */
+        .diya-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .diya {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .diya:hover {
+            transform: scale(1.2);
+        }
+        
+        .diya-base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 15px;
+            background: linear-gradient(to bottom, #8b4513, #654321);
+            border-radius: 50% 50% 5px 5px;
+        }
+        
+        .diya-flame {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 30px;
+            background: radial-gradient(ellipse at center, #ffff00, #ff8c00, #ff4500);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px #ff4500, 0 0 25px #ff8c00;
+            animation: flicker 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 100% {
+                opacity: 1;
+                height: 30px;
+            }
+            25% {
+                opacity: 0.8;
+                height: 28px;
+            }
+            50% {
+                opacity: 0.9;
+                height: 32px;
+            }
+            75% {
+                opacity: 0.7;
+                height: 29px;
+            }
+        }
+        
+        /* CSS-only floating diyas */
+        .diya::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+        
+        .diya:hover::after {
+            content: '';
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 0;
+            left: calc(10vw + (80vw * var(--random-position, 0.5)));
+            animation: float-up 15s linear forwards;
+            opacity: 0;
+        }
+        
+        #linkedin-diya:hover::after { --random-position: 0.2; }
+        #instagram-diya:hover::after { --random-position: 0.5; }
+        #twitter-diya:hover::after { --random-position: 0.8; }
+        
+        /* Auto-floating diyas */
+        .auto-floating-diya {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 0;
+            opacity: 0;
+            z-index: 30;
+        }
+        
+        .auto-floating-linkedin {
+            left: 20vw;
+            animation: float-up 15s linear infinite 1s, auto-appear 45s infinite 1s;
+        }
+        
+        .auto-floating-instagram {
+            left: 50vw;
+            animation: float-up 15s linear infinite 16s, auto-appear 45s infinite 16s;
+        }
+        
+        .auto-floating-twitter {
+            left: 80vw;
+            animation: float-up 15s linear infinite 31s, auto-appear 45s infinite 31s;
+        }
+        
+        @keyframes auto-appear {
+            0%, 33.3% {
+                opacity: 1;
+            }
+            33.4%, 100% {
+                opacity: 0;
+            }
+        }
+        
+        .floating-diya {
+            position: absolute;
+            animation: float-up 15s linear forwards;
+            opacity: 0;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .social-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            z-index: 2;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: bold;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 3rem;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #8b5cf6;
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .glass-effect {
+             background: rgba(17, 17, 17, 0.5);
+             backdrop-filter: blur(10px);
+             -webkit-backdrop-filter: blur(10px);
+             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Header and Navigation */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+        }
+        
+        #header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .logo-font {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 0.1em;
+        }
+        .logo-font span {
+            color: #8b5cf6;
+        }
+        
+        #desktop-nav {
+            display: none; /* Hidden by default, shown on larger screens */
+        }
+        
+        #desktop-nav a {
+            font-family: "Orbitron", sans-serif;
+            color: #d1d5db;
+            transition: all 0.3s ease;
+            margin: 0 1.5rem;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        #desktop-nav a:hover {
+            color: #e37119;
+            scale: 1.1;
+            font-weight: 500;
+        }
+        #desktop-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #e37119;
+            transition: width 0.3s ease;
+        }
+        #desktop-nav a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-register-btn {
+            display: none; /* Hidden by default */
+            background-color: #8b5cf6;
+            color: #ffffff;
+            padding: 0.6rem 1.8rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+        }
+        .nav-register-btn:hover {
+            background-color: #e37119;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(227, 113, 25, 0.3);
+        }
+        
+        #menu-toggle-label {
+            cursor: pointer;
+        }
+        
+        #menu-toggle {
+            display: none;
+        }
+        
+        #menu-toggle ~ #mobile-menu {
+            display: none;
+        }
+        
+        #menu-toggle:checked ~ #mobile-menu {
+            display: block;
+        }
+
+        .close-icon {
+            display: none;
+        }
+        
+        #menu-toggle:checked ~ .container nav #menu-toggle-label .menu-icon {
+            display: none;
+        }
+        
+        #menu-toggle:checked ~ .container nav #menu-toggle-label .close-icon {
+            display: block;
+        }
+        
+        #mobile-menu a {
+            display: block;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+        #mobile-menu a:hover {
+             background-color: rgba(227, 113, 25, 0.2);
+             color: #e37119;
+        }
+        #mobile-menu .mobile-register-btn-container {
+            padding: 1rem;
+        }
+        #mobile-menu .mobile-register-btn {
+             display: block;
+             text-align: center;
+             background-color: #8b5cf6;
+             color: #ffffff;
+             padding: 0.5rem 1.5rem;
+             font-weight: 600;
+             border-radius: 4px;
+             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+         #mobile-menu .mobile-register-btn:hover {
+             background-color: #e37119;
+             transform: translateY(-3px) scale(1.05);
+         }
+
+        /* Hero Section */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding-top: 6rem;
+            background-image: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.3), rgba(255, 255, 255, 0)),
+                radial-gradient(ellipse 70% 60% at 80% 40%, rgba(227, 113, 25, 0.25), rgba(255, 255, 255, 0));
+        }
+        #home h1 {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        #home p {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            margin-top: 1rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-button {
+            display: inline-block;
+            margin-top: 2.5rem;
+            background-color: #8b5cf6;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, transparent, rgba(227, 113, 25, 0.3), transparent) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .hero-button:hover {
+            background-color: #e37119;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(227, 113, 25, 0.3), 0 0 20px rgba(227, 113, 25, 0.4);
+        }
+        .hero-button:hover::before {
+            opacity: 1;
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 2rem;
+        }
+        
+        .hero-left {
+            flex: 1;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .hero-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .tatvaimg {
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+        
+        /* Leaderboard Styling */
+        .leaderboard-preview {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(20, 20, 30, 0.7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .leaderboard-preview h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: #e37119;
+        }
+        
+        .leaderboard-tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .leaderboard-tab {
+            padding: 0.5rem 0;
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .leaderboard-tab:hover {
+            color: #e37119;
+        }
+        
+        .leaderboard-tab.active {
+            color: #e37119;
+            font-weight: bold;
+        }
+        
+        .leaderboard-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #e37119;
+        }
+        
+        .leaderboard-content {
+            display: none;
+        }
+        
+        .leaderboard-content.active {
+            display: block;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        
+        .rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(227, 113, 25, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .player-info {
+            flex: 1;
+        }
+        
+        .player-name {
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        
+        .player-college {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .score {
+            font-weight: bold;
+            color: #e37119;
+        }
+        
+        .view-leaderboard-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            background: rgba(128, 0, 128, 0.7);
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .view-leaderboard-btn:hover {
+            background: #e37119;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(227, 113, 25, 0.4);
+        }
+
+        /* Venue & Date Section */
+        #venue .venue-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        #venue .calendar-container {
+            width: 100%;
+            max-width: 28rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+        #venue .calendar-container h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+        .calendar-grid.days {
+            margin-bottom: 1rem;
+        }
+        .calendar-day, .calendar-date {
+            text-align: center;
+        }
+        .calendar-day {
+            font-weight: 600;
+            color: #a78bfa;
+        }
+        .calendar-date {
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            color: #a1a1aa;
+        }
+        .fest-day {
+            background-color: #8b5cf6;
+            color: white;
+            font-weight: 700;
+            position: relative;
+        }
+        .fest-day::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: white;
+        }
+        #venue iframe {
+            width: 100%;
+            height: 24rem;
+            border-radius: 1rem;
+            border: 2px solid rgba(124, 58, 237, 0.3);
+        }
+        #venue .venue-name {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.125rem;
+            color: #d1d5db;
+        }
+
+        /* Events Section */
+        #events .events-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        .event-card {
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1rem;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, transparent, rgba(227, 113, 25, 0.3), transparent) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: 0 8px 25px rgba(227, 113, 25, 0.3), 0 0 20px rgba(227, 113, 25, 0.2);
+        }
+        .event-card:hover::before {
+            opacity: 1;
+        }
+        .event-icon {
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .event-card:hover .event-icon {
+            transform: scale(1.1);
+            color: #a78bfa;
+        }
+        .event-card h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .event-card p {
+            color: #9ca3af;
+        }
+
+        /* Journey Timeline CSS */
+        #journey {
+            background-color: #0a0a0a;
+            padding: 5rem 0;
+        }
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+        .timeline {
+            position: relative;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(227, 113, 25, 0.3), rgba(227, 113, 25, 0.8), rgba(227, 113, 25, 0.3));
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .timeline-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e37119;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 5px rgba(227, 113, 25, 0.2);
+        }
+        .timeline-dot:hover, .timeline-dot:focus {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 8px rgba(227, 113, 25, 0.3), 0 0 20px rgba(227, 113, 25, 0.6);
+        }
+        .dot-year {
+            position: absolute;
+            top: -30px;
+            color: #e37119;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .timeline-content {
+            position: relative;
+            min-height: 200px;
+        }
+        .milestone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: rgba(20, 20, 30, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(227, 113, 25, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            visibility: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .milestone:target {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        .sanskrit-heading {
+            font-family: 'Noto Sans', sans-serif;
+            color: #e37119;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(227, 113, 25, 0.5);
+        }
+        
+        /* Festival Mode Toggle */
+        .festival-mode-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .festival-toggle {
+            position: absolute;
+            opacity: 0;
+            height: 0;
+            width: 0;
+        }
+        .festival-toggle-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(20, 20, 30, 0.7);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(227, 113, 25, 0.3);
+        }
+        .festival-toggle-label::before {
+            content: '🪔';
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        .festival-toggle:checked + .festival-toggle-label {
+            background: rgba(227, 113, 25, 0.7);
+            box-shadow: 0 0 20px rgba(227, 113, 25, 0.6);
+        }
+        .festival-toggle:checked + .festival-toggle-label::before {
+            transform: scale(1.2);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+        
+        /* Festival Mode Styles */
+        #fest-mode:checked ~ * .diya {
+            filter: brightness(1.5) drop-shadow(0 0 10px gold);
+        }
+        #fest-mode:checked ~ * .diya::after {
+            animation: flicker 2s infinite alternate;
+        }
+        #fest-mode:checked ~ * {
+            --bg-gradient: linear-gradient(135deg, #ff7e5f, #feb47b);
+        }
+        #fest-mode:checked ~ * .section-title {
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            animation: shimmer 3s infinite;
+        }
+        #fest-mode:checked ~ * .timeline::before {
+            background: linear-gradient(90deg, gold, #e37119, gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        #fest-mode:checked ~ * .timeline-dot {
+            background: gold;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        }
+        
+        @keyframes shimmer {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.7); }
+            100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        }
+        
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { filter: brightness(1.5) drop-shadow(0 0 15px gold); }
+            20%, 24%, 55% { filter: brightness(1.2) drop-shadow(0 0 5px gold); }
+        }
+        
+        @media (max-width: 768px) {
+            .timeline {
+                height: 80px;
+            }
+            .dot-year {
+                font-size: 0.8rem;
+                top: -25px;
+            }
+            .sanskrit-heading {
+                font-size: 1.4rem;
+            }
+        }
+        
+        /* Gallery Section */
+        #gallery { 
+            background-color: #000;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0 2rem;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .gallery-column {
+            display: grid;
+            gap: 1rem;
+        }
+        .gallery-column img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            transition: transform 0.3s;
+        }
+        .gallery-column img:hover {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            #gallery {
+                padding: 0 1rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            #gallery {
+                padding: 0 0.5rem;
+            }
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .team-member {
+            text-align: center;
+            width: 15rem;
+            transition: all 0.3s ease;
+            padding: 1.5rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, transparent, rgba(227, 113, 25, 0.3), transparent) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .team-member:hover {
+            transform: perspective(800px) rotateY(5deg) rotateX(5deg);
+            box-shadow: 0 0 20px rgba(227, 113, 25, 0.6);
+        }
+        .team-member:hover::before {
+            opacity: 1;
+        }
+        .team-member img {
+            width: 10rem;
+            height: 10rem;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 9999px;
+            border: 4px solid #8b5cf6;
+            transition: all 0.3s ease;
+        }
+        .team-member:hover img {
+            border-color: #e37119;
+            box-shadow: 0 0 15px rgba(227, 113, 25, 0.8);
+        }
+        .team-member h3 {
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .team-member p {
+            color: #a78bfa;
+        }
+
+        /* Sponsors Section */
+        #sponsors { background-color: #000; padding-bottom: 2rem;}
+        .sponsors-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+        }
+        .animate-scroll {
+            display: flex;
+            width: max-content;
+            animation: scroll 40s linear infinite;
+        }
+        .sponsors-container:hover .animate-scroll {
+            animation-play-state: paused;
+        }
+        .sponsor-logo {
+            height: 3rem;
+            filter: grayscale(1);
+            transition: filter 0.3s;
+            margin: 0 4rem;
+            flex-shrink: 0;
+        }
+        .sponsor-logo:hover {
+            filter: grayscale(0);
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Sponsor Outreach & Registration Sections */
+        .registration-form-container {
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 3rem;
+            border-radius: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d1d5db;
+            margin-bottom: 0.5rem;
+        }
+        .form-input, .form-select {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            color: #ffffff;
+            padding: 0.75rem;
+            transition: all 0.3s;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.5);
+        }
+        .form-select {
+            appearance: none;
+        }
+        .submit-button {
+            width: 100%;
+            background-color: #8b5cf6;
+            color: #ffffff;
+            padding: 0.75rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+        }
+        .submit-button:hover {
+            background-color: #e37119;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(227, 113, 25, 0.3);
+        }
+
+        /* Footer */
+        #footer {
+            border-top: 2px solid rgba(124, 58, 237, 0.3);
+            padding: 2rem 0;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+        .footer-brand p {
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+        .social-links {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+        .social-links a {
+            color: #9ca3af;
+            margin: 0 0.75rem;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: #a78bfa;
+        }
+        .footer-bottom {
+            margin-top: 2rem;
+            border-top: 1px solid #374151;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #6b7280;
+        }
+        .container {
+            margin: 0 auto;
+            width: 800px;
+        } 
+
+        /* Media Queries for Responsiveness */
+        @media (min-width: 640px) {
+            .container {
+                max-width: 640px;
+            }
+            #events .events-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            section {
+                padding: 6rem 0;
+            }
+            .container {
+                max-width: 768px;
+            }
+            #home h1 {
+                font-size: 6rem;
+            }
+            #home p {
+                font-size: 1.25rem;
+            }
+            #venue .venue-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            #events .events-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-content {
+                flex-direction: row;
+                text-align: left;
+            }
+            .social-links {
+                margin-top: 0;
+            }
+            #desktop-nav {
+                display: flex;
+            }
+            .nav-register-btn {
+                display: inline-block;
+            }
+            #menu-toggle-label {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-left {
+                align-items: center;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            .leaderboard-preview {
+                max-width: 600px;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .container {
+                max-width: 1280px;
+            }
+            #home h1 {
+                font-size: 8rem;
+                letter-spacing: 0.15em;
+            }
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 767px) {
+            #header nav {
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+            }
+            .logo-font {
+                font-size: 1.5rem;
+            }
+            #home {
+                padding-top: 4rem;
+            }
+            #home h1 {
+                font-size: 3rem;
+                letter-spacing: 0.05em;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .section-padding {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+            .event-card {
+                padding: 1.5rem;
+            }
+            .footer-content {
+                text-align: center;
+            }
+            .social-links {
+                margin-top: 1.5rem;
+                justify-content: center;
+            }
+            .hero-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .hero-left {
+                align-items: center;
+                text-align: center;
+            }
+            .leaderboard-preview {
+                width: 100%;
+            }
+            .leaderboard-tabs {
+                flex-wrap: wrap;
+            }
+            .leaderboard-tab {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+                flex: 1 0 auto;
+            }
+            .leaderboard-item {
+                padding: 0.5rem;
+            }
+            .player-name {
+                font-size: 0.9rem;
+            }
+            .player-college {
+                font-size: 0.7rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            #gallery {
+                padding: 0 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Festival Mode Toggle -->
+    <input type="checkbox" id="fest-mode">
+    <div class="festival-mode-container">
+        <label for="fest-mode" class="festival-toggle-label"></label>
+    </div>
+    
+    <!-- Mandala Loader -->
+    <div class="loader-container">
+        <div class="mandala-loader">
+            <div class="mandala-circle"></div>
+            <div class="mandala-circle"></div>
+            <div class="mandala-circle"></div>
+            <div class="mandala-circle"></div>
+            <div class="mandala-center"></div>
+        </div>
+    </div>
+
+    <!-- Floating Diyas with Social Links -->
+    <div class="diya-container">
+        <div class="diya" id="linkedin-diya">
+            <div class="diya-base"></div>
+            <div class="diya-flame"></div>
+            <a href="https://linkedin.com" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+        <div class="diya" id="instagram-diya">
+            <div class="diya-base"></div>
+            <div class="diya-flame"></div>
+            <a href="https://instagram.com" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <div class="diya" id="twitter-diya">
+            <div class="diya-base"></div>
+            <div class="diya-flame"></div>
+            <a href="https://twitter.com" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Auto-floating diyas -->
+    <div class="auto-floating-diya auto-floating-linkedin">
+        <div class="diya-base"></div>
+        <div class="diya-flame"></div>
+        <a href="https://linkedin.com" target="_blank" class="social-icon">
+            <i class="fab fa-linkedin"></i>
+        </a>
+    </div>
+    <div class="auto-floating-diya auto-floating-instagram">
+        <div class="diya-base"></div>
+        <div class="diya-flame"></div>
+        <a href="https://instagram.com" target="_blank" class="social-icon">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+    <div class="auto-floating-diya auto-floating-twitter">
+        <div class="diya-base"></div>
+        <div class="diya-flame"></div>
+        <a href="https://twitter.com" target="_blank" class="social-icon">
+            <i class="fab fa-twitter"></i>
+        </a>
+    </div>
+
+    <!-- Header and Navigation -->
+    <header id="header" class="glass-effect">
+        <input type="checkbox" id="menu-toggle"/>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo-font">
+                    VEDAM<span>.</span>
+                </a>
+                <div id="desktop-nav">
+                    <a href="#home">Home</a>
+                    <a href="#venue">Venue</a>
+                    <a href="#events">Events</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#team">Team</a>
+                    <a href="#sponsors">Sponsors</a>
+                    
+                </div>
+                <a href="#register" class="nav-register-btn">Register Now</a>
+                <label for="menu-toggle" id="menu-toggle-label">
+                     <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                     <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </label>
+            </nav>
+        </div>
+         <!-- Mobile Menu -->
+        <div id="mobile-menu">
+            <a href="#home">Home</a>
+            <a href="#venue">Venue</a>
+            <a href="#events">Events</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#team">Team</a>
+            <a href="#sponsors">Sponsors</a>
+            <a href="#register">Register</a>
+            <div class="mobile-register-btn-container">
+                 <a href="#register" class="mobile-register-btn">Register Now
+                    
+                 </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-left">
+                        <img class="tatvaimg" src="./tatva.png" alt="Tatva Logo">
+                        <p>
+                            Where innovation ignites, talent thrives, and the future unfolds. Join us for an unforgettable celebration of technology and creativity.
+                        </p>
+                        <a href="#events" class="hero-button">Explore Events</a>
+                    </div>
+                    <div class="hero-right">
+                        <div class="leaderboard-preview glass-effect">
+                            <h3>TOP PERFORMERS</h3>
+                            <div class="leaderboard-tabs">
+                                <div class="leaderboard-tab active" data-tab="hackathon">Hackathon</div>
+                                <div class="leaderboard-tab" data-tab="bug-bounty">Bug Bounty</div>
+                                <div class="leaderboard-tab" data-tab="game-arena">Game Arena</div>
+                            </div>
+                            <div class="leaderboard-content active" id="hackathon-leaderboard">
+                                <div class="leaderboard-item">
+                                    <div class="rank">1</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Team Innovators</div>
+                                        <div class="player-college">MIT College</div>
+                                    </div>
+                                    <div class="score">98</div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <div class="rank">2</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Code Wizards</div>
+                                        <div class="player-college">DY Patil</div>
+                                    </div>
+                                    <div class="score">95</div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <div class="rank">3</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Tech Titans</div>
+                                        <div class="player-college">PICT</div>
+                                    </div>
+                                    <div class="score">92</div>
+                                </div>
+                            </div>
+                            <div class="leaderboard-content" id="bug-bounty-leaderboard">
+                                <div class="leaderboard-item">
+                                    <div class="rank">1</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Rahul Sharma</div>
+                                        <div class="player-college">COEP</div>
+                                    </div>
+                                    <div class="score">87</div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <div class="rank">2</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Priya Patel</div>
+                                        <div class="player-college">VIT</div>
+                                    </div>
+                                    <div class="score">82</div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <div class="rank">3</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Arjun Mehta</div>
+                                        <div class="player-college">PICT</div>
+                                    </div>
+                                    <div class="score">79</div>
+                                </div>
+                            </div>
+                            <div class="leaderboard-content" id="game-arena-leaderboard">
+                                <div class="leaderboard-item">
+                                    <div class="rank">1</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Vikram Singh</div>
+                                        <div class="player-college">DY Patil</div>
+                                    </div>
+                                    <div class="score">2450</div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <div class="rank">2</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Neha Gupta</div>
+                                        <div class="player-college">MIT</div>
+                                    </div>
+                                    <div class="score">2380</div>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <div class="rank">3</div>
+                                    <div class="player-info">
+                                        <div class="player-name">Raj Malhotra</div>
+                                        <div class="player-college">COEP</div>
+                                    </div>
+                                    <div class="score">2290</div>
+                                </div>
+                            </div>
+                            <a href="leaderboard.html" class="view-leaderboard-btn">View Full Leaderboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Events Section -->
+        <section id="events">
+            <div class="container">
+                <h2 class="section-title">OUR EVENTS</h2>
+                <div class="events-grid">
+                    <div class="event-card glass-effect">
+                        <div class="event-icon"><svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
+                        <h3>ROBO SOCCER</h3>
+                        <p>Engineer your champion bot and compete in a thrilling, high-tech soccer tournament where strategy meets metal.</p>
+                    </div>
+                    <div class="event-card glass-effect">
+                        <div class="event-icon"><svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="M14.5 4l-5 16"/></svg></div>
+                        <h3>HACKATHON</h3>
+                        <p>A 24-hour coding marathon. Collaborate, innovate, and build solutions to real-world problems. The clock is ticking!</p>
+                    </div>
+                    <div class="event-card glass-effect">
+                        <div class="event-icon"><svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><path d="M17.5 17.5 14 14"/><path d="m3 21 6-6"/><path d="M14 6.002h.01"/><path d="M18 10h.01"/><path d="M21 17a4 4 0 0 0-4-4h-2v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v10a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4Z"/></svg></div>
+                        <h3>GAME ARENA</h3>
+                        <p>From casual clicks to competitive clashes, our Game Arena is the ultimate battleground for all gamers. Are you in?</p>
+                    </div>
+                     <div class="event-card glass-effect">
+                        <div class="event-icon"><svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 9 3 7.7 3 6c0-1.7 1.6-3 3.53-3"/><path d="M17.47 9c1.93 0 3.5-1.3 3.5-3c0-1.7-1.57-3-3.53-3"/><path d="M6.5 13H5"/><path d="M17.5 13H19"/></svg></div>
+                        <h3>BUG BOUNTY</h3>
+                        <p>Put your security skills to the test. Find vulnerabilities, report them, and earn exciting rewards and recognition.</p>
+                    </div>
+                     <div class="event-card glass-effect">
+                        <div class="event-icon"><svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div>
+                        <h3>CULTURAL CONTEST</h3>
+                        <p>Unleash your artistic side! A vibrant stage for singing, dancing, and drama that celebrates creativity beyond code.</p>
+                    </div>
+                    <div class="event-card glass-effect">
+                        <div class="event-icon"><svg width="64" height="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></div>
+                        <h3>MORE TO COME</h3>
+                        <p>Stay tuned as we unveil more exciting events and workshops. The innovation never stops at Tatva!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venue & Date Section -->
+        <section id="venue">
+            <div class="container">
+                <h2 class="section-title">DATE & VENUE</h2>
+                <div class="venue-grid">
+                    <!-- Calendar -->
+                    <div class="calendar-container glass-effect">
+                        <h3>OCTOBER 2025</h3>
+                        <div class="calendar-grid days">
+                            <div class="calendar-day">Su</div><div class="calendar-day">Mo</div><div class="calendar-day">Tu</div><div class="calendar-day">We</div><div class="calendar-day">Th</div><div class="calendar-day">Fr</div><div class="calendar-day">Sa</div>
+                        </div>
+                        <div class="calendar-grid dates">
+                            <div class="calendar-date"></div><div class="calendar-date"></div><div class="calendar-date"></div><div class="calendar-date">1</div><div class="calendar-date">2</div><div class="calendar-date">3</div><div class="calendar-date">4</div><div class="calendar-date">5</div><div class="calendar-date">6</div><div class="calendar-date">7</div><div class="calendar-date">8</div><div class="calendar-date">9</div><div class="calendar-date">10</div><div class="calendar-date">11</div><div class="calendar-date">12</div><div class="calendar-date">13</div><div class="calendar-date">14</div><div class="calendar-date">15</div><div class="calendar-date">16</div><div class="calendar-date">17</div><div class="calendar-date">18</div><div class="calendar-date">19</div><div class="calendar-date">20</div><div class="calendar-date">21</div><div class="calendar-date">22</div><div class="calendar-date">23</div><div class="calendar-date fest-day">24</div><div class="calendar-date fest-day">25</div><div class="calendar-date fest-day">26</div><div class="calendar-date">27</div><div class="calendar-date">28</div><div class="calendar-date">29</div><div class="calendar-date">30</div><div class="calendar-date">31</div>
+                        </div>
+                    </div>
+                    <!-- Map -->
+                    <div>
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7561.9265904149315!2d73.91231319976056!3d18.620720620648502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c71e08905091%3A0x51ca0d931361c1bc!2sAjeenkya%20DY%20Patil%20University!5e0!3m2!1sen!2sin!4v1760351721307!5m2!1sen!2sin" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                         <p class="venue-name">Ajeenkya DY Patil University</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journey of TATVA Timeline Section -->
+        <section id="journey">
+            <div class="container">
+                <h2 class="section-title">JOURNEY OF TATVA</h2>
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <a href="#milestone-1" class="timeline-dot" id="dot-1">
+                            <span class="dot-year">2022</span>
+                        </a>
+                        <a href="#milestone-2" class="timeline-dot" id="dot-2">
+                            <span class="dot-year">2023</span>
+                        </a>
+                        <a href="#milestone-3" class="timeline-dot" id="dot-3">
+                            <span class="dot-year">2024</span>
+                        </a>
+                    </div>
+                    
+                    <div class="timeline-content">
+                        <div class="milestone" id="milestone-1">
+                            <h3 class="sanskrit-heading">प्रथम संस्करण</h3>
+                            <h4>First Edition</h4>
+                            <p>The inaugural TATVA festival marked the beginning of a new tradition, bringing together technology and culture in a celebration of innovation.</p>
+                        </div>
+                        <div class="milestone" id="milestone-2">
+                            <h3 class="sanskrit-heading">विकास यात्रा</h3>
+                            <h4>Growth Journey</h4>
+                            <p>TATVA expanded its horizons with more events, greater participation, and a wider reach across colleges throughout the region.</p>
+                        </div>
+                        <div class="milestone" id="milestone-3">
+                            <h3 class="sanskrit-heading">पुनरुत्थान</h3>
+                            <h4>Revival</h4>
+                            <p>The latest edition of TATVA returns with renewed energy, innovative competitions, and a vision to become the premier technical festival in the country.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery">
+            <div class="container">
+                <h2 class="section-title">GLIMPSES OF TATVA</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-column">
+                        <img src="https://placehold.co/500x800/1e1b4b/e0e7ff?text=Tatva+24" alt="Gallery image">
+                        <img src="https://placehold.co/500x600/6d28d9/e0e7ff?text=Hackathon" alt="Gallery image">
+                    </div>
+                    <div class="gallery-column">
+                        <img src="https://placehold.co/500x600/4c1d95/e0e7ff?text=Robo+War" alt="Gallery image">
+                        <img src="https://placehold.co/500x800/8b5cf6/e0e7ff?text=Stage" alt="Gallery image">
+                    </div>
+                    <div class="gallery-column">
+                        <img src="https://placehold.co/500x800/6d28d9/e0e7ff?text=Audience" alt="Gallery image">
+                        <img src="https://placehold.co/500x600/1e1b4b/e0e7ff?text=Winners" alt="Gallery image">
+                   
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team">
+            <div class="container">
+                <h2 class="section-title">MEET THE MINDS BEHIND TATVA</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://placehold.co/400x400/1a1a1a/8b5cf6?text=AA" alt="Team member">
+                        <h3>AKASH ANAND</h3>
+                        <p>Head-Coordinator</p>
+                    </div>
+                     <div class="team-member">
+                        <img src="https://placehold.co/400x400/1a1a1a/8b5cf6?text=SS" alt="Team member">
+                        <h3>SIRWAGYA SHEKHAR</h3>
+                        <p>Head of Events</p>
+                    </div>
+                     <div class="team-member">
+                        <img src="https://placehold.co/400x400/1a1a1a/8b5cf6?text=SO" alt="Team member">
+                        <h3>SHIVANSH OJHA</h3>
+                        <p>Marketing Head</p>
+                    </div>
+                     <div class="team-member">
+                        <img src="https://placehold.co/400x400/1a1a1a/8b5cf6?text=D" alt="Team member">
+                        <h3>DIVYANSHI</h3>
+                        <p>Sponsorship Lead</p>
+                    </div>
+                     <div class="team-member">
+                        <img src="https://placehold.co/400x400/1a1a1a/8b5cf6?text=A" alt="Team member">
+                        <h3>ADITYA BAHUGUNA</h3>
+                        <p>Vice-Coordinator</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://placehold.co/400x400/1a1a1a/8b5cf6?text=A" alt="Team member">
+                        <h3>AADI SHAH</h3>
+                        <p>Finance-Lead</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sponsors Section -->
+        <section id="sponsors">
+            <div class="container">
+                <h2 class="section-title">OUR ESTEEMED SPONSORS</h2>
+                <div class="sponsors-container">
+                    <div class="animate-scroll">
+                        <!-- Logos are duplicated for a seamless loop -->
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=InnovateCorp" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=TechGenius" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=FutureSys" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=CodeWave" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=QuantumLeap" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=InnovateCorp" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=TechGenius" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=FutureSys" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=CodeWave" alt="Sponsor Logo" class="sponsor-logo">
+                        <img src="https://placehold.co/200x100/e0e0e0/1a1a1a?text=QuantumLeap" alt="Sponsor Logo" class="sponsor-logo">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sponsor Outreach Section -->
+        <section id="sponsor-us">
+            <div class="container">
+                <h2 class="section-title">BECOME A SPONSOR</h2>
+                <div class="registration-form-container glass-effect">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="company-name">Company Name</label>
+                            <input type="text" name="company-name" id="company-name" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="sponsor-email">Contact Email</label>
+                            <input type="email" name="sponsor-email" id="sponsor-email" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="sponsor-event-select">Event to Sponsor</label>
+                            <select id="sponsor-event-select" name="sponsor-event" class="form-select">
+                                <option>All Events (Main Sponsor)</option>
+                                <option>Robo Soccer</option>
+                                <option>Hackathon</option>
+                                <option>Game Arena</option>
+                                <option>Bug Bounty</option>
+                                <option>Cultural Contest</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sponsorship-tier">Sponsorship Tier</label>
+                            <select id="sponsorship-tier" name="tier" class="form-select">
+                                <option>Tier 1</option>
+                                <option>Tier 2</option>
+                                <option>Tier 3</option>
+                            </select>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <button type="submit" class="submit-button">
+                                Submit Inquiry
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Section -->
+        <section id="register">
+            <div class="container">
+                <h2 class="section-title">REGISTER NOW</h2>
+                <div class="registration-form-container glass-effect">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" name="name" id="name" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" name="email" id="email" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="college">College Name</label>
+                            <input type="text" name="college" id="college" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-select">Choose Event</label>
+                            <select id="event-select" name="event" class="form-select">
+                                <option>Robo Soccer</option>
+                                <option>Hackathon</option>
+                                <option>Game Arena</option>
+                                <option>Bug Bounty</option>
+                                <option>Cultural Contest</option>
+                            </select>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <button type="submit" class="submit-button">
+                                Secure Your Spot
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="glass-effect">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                     <a href="#home" class="logo-font">
+                        TATVA<span>.</span>
+                     </a>
+                     <p>Igniting the future of technology.</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 1.4 3.3 4.9 3.3 4.9s-1.4-.6-2.8-.9c-1.2 2.2-2.8 4.3-5.2 4.3s-5.5-2.4-5.5-5.4c0-1.5 1.2-2.8 2.8-2.8H6.7s-1.5-.9-.9-2.9c.8-2.7 3.5-4.5 6.4-4.5s4.9 1.5 4.9 1.5l-1.5 1.5s-2.3-.9-3.8-.9c-2 0-3.8 1.2-3.8 3.5 0 1.2 1 2.2 2.2 2.2s1.7-.5 2.2-.8c1.2-1.5 2.5-3.8 2.5-3.8z"/></svg></a>
+                    <a href="#"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+                    <a href="#"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+                    <a href="#"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tatva Tech Fest. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+</html>
+
+

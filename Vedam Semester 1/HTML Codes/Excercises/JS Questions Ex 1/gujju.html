@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard Card</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #card {
+            border: 2px solid black;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: lightgray;
+        }
+
+        button {
+            padding: 10px;
+            width: 120px;
+            margin: 5px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #status {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="card">
+        <img id="pic" src="https://via.placeholder.com/120" />
+        <h2 id="name">Gujju Gupta</h2>
+        <p id="role">Student - B.Tech CSE (AI)</p>
+
+        <p id="status">Status: Offline</p>
+
+        <button id="statusBtn">Go Online</button>
+        <button id="bioBtn">Show Bio</button>
+
+        <p id="bio" style="display: none;">
+            I love coding and I am learning full stack development.
+        </p>
+    </div>
+
+    <script>
+        const statusText = document.getElementById("status");
+        const statusBtn = document.getElementById("statusBtn");
+        const bioBtn = document.getElementById("bioBtn");
+        const bio = document.getElementById("bio");
+
+        let online = false;
+        let bioVisible = false;
+
+        statusBtn.addEventListener("click", () => {
+            if (!online) {
+                statusText.textContent = "Status: Online";
+                statusText.style.color = "green";
+                statusBtn.textContent = "Go Offline";
+            } else {
+                statusText.textContent = "Status: Offline";
+                statusText.style.color = "red";
+                statusBtn.textContent = "Go Online";
+            }
+            online = !online;
+        });
+
+        bioBtn.addEventListener("click", () => {
+            if (!bioVisible) {
+                bio.style.display = "block";
+                bioBtn.textContent = "Hide Bio";
+            } else {
+                bio.style.display = "none";
+                bioBtn.textContent = "Show Bio";
+            }
+            bioVisible = !bioVisible;
+        });
+    </script>
+
+</body>
+</html>

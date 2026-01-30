@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Event Showcase</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for Animations and Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background color (gray-900) */
+        }
+
+        /* Pulsing animation for the main registration button (Updated color to cyan) */
+        @keyframes pulse-register {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); /* Tailwind cyan-400 */
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(34, 211, 238, 0);
+            }
+        }
+
+        .animate-pulse-register {
+            animation: pulse-register 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        /* Smooth scroll margin for fixed header */
+        .scroll-mt-24 {
+            scroll-margin-top: 6rem; /* Adjust based on header height */
+        }
+
+        /* General card hover effect */
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px violet; /* Stronger dark shadow */
+        }
+
+        /* Responsive event grid */
+        .event-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 768px) {
+            .event-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-gray-900/90 shadow-xl backdrop-blur-sm"> <!-- Changed to gray-900/90 and shadow-xl for dark mode -->
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-cyan-400">C<span class="text-fuchsia-400">E</span>C</h1> <!-- New club colors -->
+            <!-- Mobile Menu Button (Hidden on Desktop) -->
+            <button id="menu-button" class="md:hidden text-gray-200 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-gray-300 hover:text-cyan-400 transition duration-300">Home</a>
+                <a href="#clue-pursuit" class="text-gray-300 hover:text-cyan-400 transition duration-300">Clue Pursuit</a>
+                <a href="#vedostav" class="text-gray-300 hover:text-cyan-400 transition duration-300">Vedostav</a>
+                <a href="#bgmi-tournament" class="text-gray-300 hover:text-cyan-400 transition duration-300">BGMI Tourney</a>
+                <a href="#register" class="px-4 py-1.5 bg-fuchsia-500 text-white font-semibold rounded-full hover:bg-fuchsia-600 transition duration-300">Register Now</a>
+            </div>
+        </nav>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-gray-800 border-t border-gray-700"> <!-- Dark mode menu -->
+            <a href="#home" class="block text-gray-300 hover:text-cyan-400 transition duration-300">Home</a>
+            <a href="#clue-pursuit" class="block text-gray-300 hover:text-cyan-400 transition duration-300">Clue Pursuit</a>
+            <a href="#vedostav" class="block text-gray-300 hover:text-cyan-400 transition duration-300">Vedostav</a>
+            <a href="#bgmi-tournament" class="block text-gray-300 hover:text-cyan-400 transition duration-300">BGMI Tourney</a>
+            <a href="#register" class="block px-4 py-2 text-center bg-fuchsia-500 text-white font-semibold rounded-lg hover:bg-fuchsia-600 transition duration-300">Register Now</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Homepage / Hero Section -->
+        <section id="home" class="min-h-[80vh] flex items-center bg-slate-900 text-white p-4"> <!-- Dark hero background -->
+            <div class="max-w-7xl mx-auto text-center py-20">
+                <h2 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight">
+                    The Campus is <span class="text-cyan-400 animate-bounce-slow">ALIVE</span>
+                </h2>
+                <p class="text-xl md:text-2xl mb-8 font-light max-w-3xl mx-auto text-gray-300">
+                    Explore the three flagship events uniting innovation, culture, and competition this semester!
+                </p>
+                <a href="#register" class="inline-block px-10 py-4 bg-cyan-500 text-gray-900 font-bold text-lg rounded-full shadow-xl hover:bg-cyan-400 transition duration-500 animate-pulse-register"> <!-- Cyan button -->
+                    Secure Your Spot
+                </a>
+            </div>
+        </section>
+
+        <!-- Event Showcase Summary -->
+        <section id="events" class="py-20 px-4 bg-gray-900"> <!-- Dark background -->
+            <div class="max-w-7xl mx-auto">
+                <h3 class="text-4xl font-bold text-center mb-16 text-gray-100">Our Signature Events</h3>
+
+                <div class="event-grid">
+                    <!-- Event 1 Card: Clue Pursuit -->
+                    <div class="card-hover bg-gray-800 rounded-xl shadow-lg p-6 text-center transition duration-500 border-t-4 border-cyan-400"> <!-- Dark card, cyan border -->
+                        <h4 class="text-2xl font-bold text-gray-100 mb-3">Clue Pursuit</h4>
+                        <p class="text-sm text-gray-400 mb-4">Entrepreneurship Club</p>
+                        <p class="text-gray-300">A thrilling treasure hunt designed to test your business acumen and problem-solving skills.</p>
+                        <a href="#clue-pursuit" class="mt-4 inline-block text-sm text-cyan-400 hover:text-cyan-300 font-semibold transition duration-300">Learn More &rarr;</a>
+                    </div>
+                    <!-- Event 2 Card: Vedostav -->
+                    <div class="card-hover bg-gray-800 rounded-xl shadow-lg p-6 text-center transition duration-500 border-t-4 border-fuchsia-500"> <!-- Dark card, fuchsia border -->
+                        <h4 class="text-2xl font-bold text-gray-100 mb-3">Vedostav</h4>
+                        <p class="text-sm text-gray-400 mb-4">Cultural Club</p>
+                        <p class="text-gray-300">A grand celebration of Diwali, showcasing traditional performances, food, and festive joy.</p>
+                        <a href="#vedostav" class="mt-4 inline-block text-sm text-fuchsia-400 hover:text-fuchsia-300 font-semibold transition duration-300">Learn More &rarr;</a>
+                    </div>
+                    <!-- Event 3 Card: BGMI Tournament -->
+                    <div class="card-hover bg-gray-800 rounded-xl shadow-lg p-6 text-center transition duration-500 border-t-4 border-green-500"> <!-- Dark card, keeping green border for BGMI -->
+                        <h4 class="text-2xl font-bold text-gray-100 mb-3">BGMI Tournament</h4>
+                        <p class="text-sm text-gray-400 mb-4">E-Sports Club</p>
+                        <p class="text-gray-300">The ultimate battleground for gamers to showcase their skills and claim the championship title.</p>
+                        <a href="#bgmi-tournament" class="mt-4 inline-block text-sm text-green-400 hover:text-green-300 font-semibold transition duration-300">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Clue Pursuit Section -->
+        <section id="clue-pursuit" class="scroll-mt-24 py-20 px-4 bg-gray-800 border-b border-gray-700 text-gray-200"> <!-- Dark section -->
+            <div class="max-w-7xl mx-auto md:flex md:items-center md:space-x-12">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h3 class="text-4xl font-extrabold text-cyan-400 mb-4">Clue Pursuit: The Entrepreneur's Challenge</h3> <!-- Cyan title -->
+                    <p class="text-lg text-gray-400 mb-6">
+                        Hosted by the **Entrepreneurship Club**, Clue Pursuit is not just a treasure hunt—it's a high-stakes simulation of the startup world. Teams must decipher cryptic clues, navigate complex challenges, and apply basic business principles to reach the final prize.
+                    </p>
+                    <div class="space-y-3">
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-cyan-400 font-bold mr-2 text-xl">&bull;</span> **Date:** October 28th
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-cyan-400 font-bold mr-2 text-xl">&bull;</span> **Venue:** Central Lawn to Incubation Centre
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-cyan-400 font-bold mr-2 text-xl">&bull;</span> **Prize:** ₹10,000 cash + Incubation Mentorship
+                        </p>
+                    </div>
+                    <a href="#register" class="mt-8 inline-block px-8 py-3 bg-cyan-500 text-gray-900 font-semibold rounded-lg shadow-md hover:bg-cyan-600 transition duration-300 transform hover:scale-105"> <!-- Cyan button -->
+                        Register for the Hunt
+                    </a>
+                </div>
+                <div class="md:w-1/2">
+                    <!-- Image of a stylized compass and map -->
+                    <img src="https://placehold.co/800x500/06b6d4/ffffff?text=Clue+Pursuit+%5BMap%5D" 
+                         alt="Stylized map and compass representing a clue hunt" 
+                         class="rounded-xl shadow-2xl w-full transition duration-500 hover:opacity-90">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Vedostav Section -->
+        <section id="vedostav" class="scroll-mt-24 py-20 px-4 bg-gray-900 border-b border-gray-800 text-gray-200"> <!-- Dark section -->
+            <div class="max-w-7xl mx-auto md:flex md:items-center md:space-x-12 flex-row-reverse">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h3 class="text-4xl font-extrabold text-fuchsia-400 mb-4">Vedostav: A Festival of Lights and Culture</h3> <!-- Fuchsia title -->
+                    <p class="text-lg text-gray-400 mb-6">
+                        Organized by the **Cultural Club**, Vedostav is our college's premier Diwali celebration. Immerse yourself in the vibrant traditions of India with spectacular dance performances, live music, a grand feast, and the beautifully decorated *Deepa Maala* (row of lamps).
+                    </p>
+                    <div class="space-y-3">
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-fuchsia-400 font-bold mr-2 text-xl">&bull;</span> **Date:** November 10th
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-fuchsia-400 font-bold mr-2 text-xl">&bull;</span> **Venue:** Amphitheatre & Main Quad
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-fuchsia-400 font-bold mr-2 text-xl">&bull;</span> **Highlights:** Cultural Performances, Food Stalls, Sky Lanterns
+                        </p>
+                    </div>
+                    <a href="#register" class="mt-8 inline-block px-8 py-3 bg-fuchsia-500 text-white font-semibold rounded-lg shadow-md hover:bg-fuchsia-600 transition duration-300 transform hover:scale-105"> <!-- Fuchsia button -->
+                        Celebrate with Us
+                    </a>
+                </div>
+                <div class="md:w-1/2">
+                    <!-- Image of traditional Indian diyas -->
+                    <img src="https://placehold.co/800x500/d946ef/ffffff?text=Vedostav+%5BDiyas%5D" 
+                         alt="Traditional Indian diyas lit up for Diwali" 
+                         class="rounded-xl shadow-2xl w-full transition duration-500 hover:opacity-90">
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. BGMI Tournament Section -->
+        <section id="bgmi-tournament" class="scroll-mt-24 py-20 px-4 bg-gray-800 text-gray-200"> <!-- Dark section -->
+            <div class="max-w-7xl mx-auto md:flex md:items-center md:space-x-12">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h3 class="text-4xl font-extrabold text-green-400 mb-4">BGMI Tournament: The Ultimate Battleground</h3> <!-- Green title -->
+                    <p class="text-lg text-gray-400 mb-6">
+                        The **E-Sports Club** presents the most anticipated gaming event of the year! Assemble your squad, sharpen your skills, and drop into the battle royale for a chance to prove you are the best. This is where legends are made and champions rise.
+                    </p>
+                    <div class="space-y-3">
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-green-400 font-bold mr-2 text-xl">&bull;</span> **Date:** December 5th - 7th
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-green-400 font-bold mr-2 text-xl">&bull;</span> **Format:** Squads (4v4), Erangel Map
+                        </p>
+                        <p class="flex items-center text-gray-300">
+                            <span class="text-green-400 font-bold mr-2 text-xl">&bull;</span> **Total Prize Pool:** ₹25,000 + Gaming Gear
+                        </p>
+                    </div>
+                    <a href="#register" class="mt-8 inline-block px-8 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300 transform hover:scale-105"> <!-- Green button -->
+                        Enlist Your Squad
+                    </a>
+                </div>
+                <div class="md:w-1/2">
+                    <!-- Image of a competitive gaming controller -->
+                    <img src="https://placehold.co/800x500/4ade80/ffffff?text=BGMI+Tournament+%5BEsports%5D" 
+                         alt="Competitive gaming controller representing an esports event" 
+                         class="rounded-xl shadow-2xl w-full transition duration-500 hover:opacity-90">
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Registration Form (Design Only) -->
+        <section id="register" class="scroll-mt-24 py-20 px-4 bg-gray-900 text-white">
+            <div class="max-w-xl mx-auto">
+                <h3 class="text-4xl font-extrabold text-center mb-6 text-cyan-400">Register for the Events</h3> <!-- Cyan title -->
+                <p class="text-center text-gray-400 mb-10">
+                    Select the events you want to participate in and provide your details below.
+                </p>
+
+                <form class="bg-gray-800 p-8 rounded-xl shadow-2xl space-y-6 border border-gray-700 transform transition duration-500 hover:shadow-cyan-500/30">
+                    
+                    <!-- Event Selection -->
+                    <div class="space-y-4">
+                        <label class="block text-xl font-bold text-white mb-2">Select Event(s):</label>
+                        <div class="flex flex-col sm:flex-row sm:space-x-6 space-y-3 sm:space-y-0">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="event" value="clue-pursuit" class="form-checkbox h-5 w-5 text-cyan-500 rounded focus:ring-cyan-500 bg-gray-700 border-gray-600">
+                                <span class="ml-2 text-gray-300">Clue Pursuit</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="event" value="vedostav" class="form-checkbox h-5 w-5 text-fuchsia-500 rounded focus:ring-fuchsia-500 bg-gray-700 border-gray-600">
+                                <span class="ml-2 text-gray-300">Vedostav</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="event" value="bgmi-tournament" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500 bg-gray-700 border-gray-600">
+                                <span class="ml-2 text-gray-300">BGMI Tournament</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Name Field -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-400">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-cyan-500 transition duration-300">
+                    </div>
+
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-400">College Email</label>
+                        <input type="email" id="email" name="email" placeholder="john.doe@college.edu" class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-cyan-500 transition duration-300">
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-400">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-cyan-500 transition duration-300">
+                    </div>
+                    
+                    <!-- Submit Button (Design Only) -->
+                    <button type="submit" class="w-full py-3 bg-cyan-500 text-gray-900 font-bold rounded-lg hover:bg-cyan-400 transition duration-300 transform hover:scale-[1.01] shadow-lg"> <!-- Cyan button -->
+                        Confirm Registration (Design Only)
+                    </button>
+                    <p class="text-center text-xs text-gray-500">
+                        *Note: This is a design-only form and has no active backend functionality.
+                    </p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-white p-6 text-center"> <!-- Darker footer -->
+        <p class="text-sm">&copy; 2025 College Event Showcase. Designed for Hackathon using HTML & CSS (Tailwind).</p>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = mobileMenu.querySelectorAll('a');
+
+            // Toggle mobile menu visibility
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked (for smooth scrolling)
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+            
+            // Prevent default form submission (since it's design only)
+            const registrationForm = document.querySelector('#register form');
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    console.log('Form submission prevented. This is a design-only form.');
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

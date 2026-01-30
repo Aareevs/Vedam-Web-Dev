@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Event Showcase - Multi-View</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/2071/2071392.png">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Custom CSS for Animations and Base Styles */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #111827; /* Dark background color (gray-900) */
+      }
+
+      header {
+        border-radius: 20px;
+        box-shadow: 30px 30px 30px 30px violet;
+      }
+
+      /* Pulsing animation for the main registration button (Updated color to cyan) */
+      @keyframes pulse-register {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); 
+        }
+        70% {
+          transform: scale(1.05);
+          box-shadow: 0 0 0 10px rgba(34, 211, 238, 0);
+        }
+      }
+
+      .animate-pulse-register {
+        animation: pulse-register 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+      }
+
+      /* Smooth scroll margin for fixed header */
+      .scroll-mt-24 {
+        scroll-margin-top: 6rem; 
+      }
+
+      /* General card hover effect */
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.4); 
+      }
+
+      /* Responsive event grid */
+      .event-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 768px) {
+        .event-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* --- Event Card Animation (Slide Up Fade In) --- */
+      /* 1. Defines the animation sequence */
+      @keyframes slideUpFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px); /* Start 20px lower and invisible */
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);    /* End at normal position and fully visible */
+        }
+      }
+
+      /* 2. Applies the animation to each card with a different delay */
+
+      /* First card waits 0.8s */
+      .event-grid > div:nth-child(1) {
+        animation: slideUpFadeIn 0.7s ease-out 0.8s;
+        animation-fill-mode: backwards; /* Ensures card is invisible before animation starts */
+      }
+
+      /* Second card waits 1.0s */
+      .event-grid > div:nth-child(2) {
+        animation: slideUpFadeIn 0.7s ease-out 1s;
+        animation-fill-mode: backwards;
+      }
+
+      /* Third card waits 1.2s */
+      .event-grid > div:nth-child(3) {
+        animation: slideUpFadeIn 0.7s ease-out 1.2s;
+        animation-fill-mode: backwards;
+      }
+      /* --- END Event Card Animation --- */
+
+      /* --- CSS Routing (Page Switching) --- */
+      /* Pages are absolutely positioned and hidden by default */
+      .page {
+        display: none;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 10; /* Below fixed header (z-50) */
+        min-height: 100vh;
+        background-color: #111827;
+        padding-top: 5rem;
+      }
+
+      /* Only show the page that matches the URL fragment (e.g., #clue-page) */
+      .page:target {
+        display: block;
+      }
+
+      /* The main view content wrapper */
+      .home-content-wrapper {
+        display: block;
+      }
+
+      /* Hide the home content if any other page is targeted */
+      #clue-page:target ~ .home-content-wrapper,
+      #vedostav-page:target ~ .home-content-wrapper,
+      #bgmi-page:target ~ .home-content-wrapper {
+        display: none;
+      }
+
+      /* --- Mobile Menu Checkbox Hack --- */
+      #menu-toggle {
+        display: none; /* Hide the actual checkbox */
+      }
+
+      #mobile-menu {
+        transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+      }
+
+      /* When the hidden checkbox is checked, show the mobile menu */
+      #menu-toggle:checked ~ #mobile-menu {
+        max-height: 500px; /* Max height large enough to show content */
+        opacity: 1;
+        padding-bottom: 1rem;
+      }
+      
+      /* --- Video Background Styles --- */
+      .hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; /* Ensures video is behind content */
+            pointer-events: none; /* Prevents interference with controls */
+        }
+        .hero-video {
+            min-width: 100%; 
+            min-height: 100%; 
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Optional: Dark overlay to ensure text readability */
+            filter: brightness(0.6); 
+        }
+
+      /* Make the sections themselves transparent so the light behind is visible */
+      #events, #tech-fest-register, #faq-section { /* Added #faq-section */
+        background-color: transparent;
+        position: relative; 
+        overflow: hidden; 
+      }
+        
+      /* The content inside the sections needs to sit above the light effect */
+      #events > div, 
+      #tech-fest-register > .max-w-xl,
+      #faq-section > .max-w-4xl { /* Added #faq-section content wrapper */
+        position: relative;
+        z-index: 1;
+      }
+
+      /* --- FAQ Accordion Styles --- */
+      .faq-item {
+        background-color: #1f2937; /* gray-800 */
+        border-radius: 8px;
+        border-left: 4px solid transparent;
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+        overflow: hidden;
+      }
+
+      .faq-item:hover {
+        border-left-color: #06b6d4; /* Cyan-500 hover border */
+        box-shadow: 0 4px 10px rgba(6, 182, 212, 0.2);
+      }
+
+      .faq-input {
+        display: none;
+      }
+
+      .faq-label {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        font-weight: 600;
+        color: #f3f4f6;
+      }
+
+      .faq-icon {
+        transition: transform 0.3s ease;
+        color: #22d3ee; 
+        font-weight: bold;
+        font-size: 1.25rem;
+      }
+
+      .faq-content {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 1.5rem;
+        color: #d1d5db; 
+        transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+        border-top: 1px solid transparent;
+      }
+
+      .faq-input:checked ~ .faq-label .faq-icon {
+        transform: rotate(180deg);
+      }
+
+      .faq-input:checked ~ .faq-content {
+        max-height: 300px; 
+        padding-bottom: 1.5rem;
+        padding-top: 0.5rem;
+        border-top-color: #4b5563;
+      }
+    </style>
+</head>
+<body>
+
+    <!--Header & Navigation-->
+    <header class="sticky top-0 z-50 bg-gray-900/90 shadow-xl backdrop-blur-sm">
+      <nav
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center"
+      >
+        <!--logo link to home-->
+        <a href="#" class="text-3xl font-extrabold text-cyan-400"
+          >VST<span class="text-fuchsia-400"> ClubSphere</span></a
+        >
+
+        <!--Menu Toggle-->
+        <input type="checkbox" id="menu-toggle" class="hidden" />
+
+        <!--Mobile Menu Button-->
+        <label
+          for="menu-toggle"
+          id="menu-button"
+          class="md:hidden text-gray-200 cursor-pointer focus:outline-none"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </label>
+
+        <!--Desktop Nav-->
+        <div class="hidden md:flex space-x-8">
+          <a
+            href="#"
+            class="text-gray-300 hover:text-cyan-400 transition duration-300"
+            >Home</a
+          >
+          <a
+            href="#events"
+            class="text-gray-300 hover:text-cyan-400 transition duration-300"
+            >Events</a
+          >
+          <a
+            href="#tech-fest-register"
+            class="text-gray-300 hover:text-cyan-400 transition duration-300"
+            >Tech Fest</a
+          >
+          <a
+            href="#tech-fest-register"
+            class="px-4 py-1.5 bg-fuchsia-500 text-white font-semibold rounded-full hover:bg-fuchsia-600 transition duration-300"
+            >Register Now</a
+          >
+        </div>
+      </nav>
+
+      <!--Mobile Menu-->
+      <div
+        id="mobile-menu"
+        class="md:hidden px-4 pt-2 space-y-2 bg-gray-800 border-t border-gray-700"
+      >
+        <!-- Links must also close the menu. The simplest way is to clear the fragment (href="#") or close the menu via another label, but for simplicity, we keep the fragment links. -->
+        <a
+          href="#"
+          class="block text-gray-300 hover:text-cyan-400 transition duration-300"
+          >Home</a
+        >
+        <a
+          href="#events"
+          class="block text-gray-300 hover:text-cyan-400 transition duration-300"
+          >Events</a
+        >
+        <a
+          href="#tech-fest-register"
+          class="block text-gray-300 hover:text-cyan-400 transition duration-300"
+          >Tech Fest</a
+        >
+        <a
+          href="#tech-fest-register"
+          class="block px-4 py-2 text-center bg-fuchsia-500 text-white font-semibold rounded-lg hover:bg-fuchsia-600 transition duration-300"
+          >Register Now</a
+        >
+      </div>
+    </header>
+
+    <!-- CURSOR LIGHT ELEMENT (Added here for fixed positioning) -->
+    <div id="cursor-light"></div>
+
+    <main id="main-content">
+      <!-- 2. Clue Pursuit Detail Page (Hidden by default, shown by :target) -->
+      <div id="clue-page" class="page">
+        <section class="max-w-7xl mx-auto px-4 py-16 text-gray-200">
+          <a
+            href="#"
+            class="mb-8 text-cyan-400 hover:text-cyan-300 transition duration-300 flex items-center"
+          >
+            <svg
+              class="w-4 h-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              ></path>
+            </svg>
+            Back to Home
+          </a>
+
+          <h2 class="text-5xl font-extrabold text-cyan-400 mb-4">
+            Clue Pursuit: The Million Dollar Map
+          </h2>
+          <p class="text-xl text-gray-400 mb-10">
+            An Entrepreneurship Club Initiative | October 10th, 2:00 PM
+          </p>
+
+          <div class="md:grid md:grid-cols-3 gap-12">
+            <div class="md:col-span-2 space-y-6">
+              <h3
+                class="text-3xl font-bold text-white border-b border-gray-700 pb-2 mb-4"
+              >
+                Event Overview
+              </h3>
+              <p class="text-gray-300">
+                Clue Pursuit is our annual campus-wide treasure hunt,
+                meticulously crafted to test the agility, lateral thinking, and
+                resourcefulness required to launch a successful startup. Each
+                clue is a mini-business problem, a challenge in logistics, or a
+                market research task. Teams must collaborate efficiently, manage
+                their time under pressure, and occasionally, outbid their
+                competitors to progress. This year's theme focuses on
+                sustainable tech, requiring participants to think green while
+                chasing the gold.
+              </p>
+
+              <h3 class="text-2xl font-bold text-white mt-8 mb-4">
+                What to Expect:
+              </h3>
+              <ul class="list-disc list-inside space-y-2 text-gray-300">
+                <li>
+                  Decryption Challenges: Puzzles requiring knowledge of basic
+                  financial metrics and coding logic.
+                </li>
+                <li>
+                  Physical Tasks: Small, time-sensitive obstacles testing team
+                  coordination.
+                </li>
+                <li>
+                  Networking Clues: Mandatory interaction with faculty mentors
+                  and alumni for specific information.
+                </li>
+                <li>
+                  Grand Finale: A final 25 Question Quiz that will test everyone's emtreprenur thinking and skills.
+                </li>
+              </ul>
+            </div>
+
+            <aside
+              class="md:col-span-1 bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700 mt-8 md:mt-0"
+            >
+              <h3 class="text-2xl font-bold text-cyan-400 mb-4">
+                The Prize Pool
+              </h3>
+              <p class="text-gray-300 mb-4">
+                Beyond the glory, massive incentives await the sharpest minds.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">1st Place:</span> ₹1000 +
+                  4 Books
+                </li>
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">2nd Place:</span> ₹500 Cash
+                  Prize
+                </li>
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">Registration:</span> Free (Teams
+                  of 3-4)
+                </li>
+              </ul>
+              <a
+                href="#tech-fest-register"
+                class="mt-6 w-full inline-block px-4 py-3 bg-fuchsia-500 text-white text-center font-semibold rounded-lg hover:bg-fuchsia-600 transition duration-300"
+              >
+                Check Out Clue Pursuit Registration
+              </a>
+            </aside>
+          </div>
+
+          <!-- Gallery Section -->
+          <div class="mt-20">
+            <h3 class="text-4xl font-bold text-white text-center mb-10">
+              Gallery: Past Pursuits
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <img
+                src="https://i.ibb.co/WWPg1S7H/entree-heyy.jpg"
+                alt="Treasure Hunt Image 1"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-cyan-500/50"
+              />
+              <img
+                src="https://i.ibb.co/cSCvq8yd/entree-searchh.jpg"
+                alt="Treasure Hunt Image 2"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-cyan-500/50"
+              />
+              <img
+                src="https://i.ibb.co/5hbH0YMX/treasurewin.jpg"
+                alt="Treasure Hunt Image 3"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-cyan-500/50"
+              />
+              <img
+                src="https://i.ibb.co/cKRD9hVP/entresucces.jpg"
+                alt="Treasure Hunt Image 4"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-cyan-500/50"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 3. Vedostav Detail Page (Hidden by default, shown by :target) -->
+      <div id="vedostav-page" class="page">
+        <section class="max-w-7xl mx-auto px-4 py-16 text-gray-200">
+          <a
+            href="#"
+            class="mb-8 text-fuchsia-400 hover:text-fuchsia-300 transition duration-300 flex items-center"
+          >
+            <svg
+              class="w-4 h-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              ></path>
+            </svg>
+            Back to Home
+          </a>
+
+          <h2 class="text-5xl font-extrabold text-fuchsia-400 mb-4">
+            Vedostav: Splendor of the Festival of Lights
+          </h2>
+          <p class="text-xl text-gray-400 mb-10">
+            Cultural Club Grand Celebration | October 11th, 6:00 PM
+          </p>
+
+          <div class="md:grid md:grid-cols-3 gap-12">
+            <div class="md:col-span-2 space-y-6">
+              <h3
+                class="text-3xl font-bold text-white border-b border-gray-700 pb-2 mb-4"
+              >
+                Cultural Highlights
+              </h3>
+              <p class="text-gray-300">
+                An Unforgettable Night of Celebration Vedotsav is Vedam's
+                signature Diwali celebration, where timeless tradition meets
+                contemporary energy! This year, we lit up the campus with an
+                unforgettable evening of high fashion, electrifying music,
+                dazzling lights, and roaring laughter. It was a night for the
+                entire VST family to connect, celebrate, and create brilliant
+                memories together under the festive sky.
+              </p>
+
+              <h3 class="text-2xl font-bold text-white mt-8 mb-4">
+                What to Expect:
+              </h3>
+              <ul class="list-disc list-inside space-y-2 text-gray-300">
+                <li>
+                  Deepa Maala: A collective lighting of traditional lamps and
+                  firecrackers!.
+                </li>
+                <li>
+                  Live Stage Performances: Featuring the best student talent in
+                  dance and poetry.
+                </li>
+                <li>
+                  Grand Feast: Complimentary traditional dinner buffet for all
+                  attendees.
+                </li>
+                <li>
+                  Rampwalk: Students showcase their style by walking down the
+                  red carpet.
+                </li>
+              </ul>
+            </div>
+
+            <aside
+              class="md:col-span-1 bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700 mt-8 md:mt-0"
+            >
+              <h3 class="text-2xl font-bold text-fuchsia-400 mb-4">
+                Event Details
+              </h3>
+              <p class="text-gray-300 mb-4">
+                No registration is required for attendance, but volunteer
+                sign-ups are open!
+              </p>
+              <ul class="space-y-3">
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">Attire:</span> Traditional Indian
+                  Wear
+                </li>
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">Entry Fee:</span> Free for
+                  Students & Staff
+                </li>
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">Volunteers:</span> Report to
+                  Cultural Head by Oct 11th
+                </li>
+              </ul>
+              <a
+                href="#tech-fest-register"
+                class="mt-6 w-full inline-block px-4 py-3 bg-cyan-400 text-gray-900 text-center font-semibold rounded-lg hover:bg-cyan-300 transition duration-300"
+              >
+                Register for Vedostav
+              </a>
+            </aside>
+          </div>
+
+          <!-- Gallery Section -->
+          <div class="mt-20">
+            <h3 class="text-4xl font-bold text-white text-center mb-10">
+              Gallery: Moments of Light
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <img
+                src="https://i.ibb.co/hxBHHCD8/IMG-3964.jpg"
+                alt="Vedostav Image 1"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-fuchsia-500/50"
+              />
+              <img
+                src="https://i.ibb.co/ycVkywG1/IMG-4206.jpg"
+                alt="Vedostav Image 2"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-fuchsia-500/50"
+              />
+              <img
+                src="https://i.ibb.co/5Xbxj8Z6/IMG-4270.jpg"
+                alt="Vedostav Group Photo"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-fuchsia-500/50"
+              />
+              <img
+                src="https://i.ibb.co/tTf4JSMC/Whats-App-Image-2025-10-13-at-15-12-46.jpg"
+                alt="Vedostav Image 4"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-fuchsia-500/50"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 4. BGMI Detail Page (Hidden by default, shown by :target) -->
+      <div id="bgmi-page" class="page">
+        <section class="max-w-7xl mx-auto px-4 py-16 text-gray-200">
+          <a
+            href="#"
+            class="mb-8 text-green-400 hover:text-green-300 transition duration-300 flex items-center"
+          >
+            <svg
+              class="w-4 h-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              ></path>
+            </svg>
+            Back to Home
+          </a>
+
+          <h2 class="text-5xl font-extrabold text-green-400 mb-4">
+            BGMI Tournament: Zone-In For Glory
+          </h2>
+          <p class="text-xl text-gray-400 mb-10">
+            E-Sports Club Championship | September 15th
+          </p>
+
+          <div class="md:grid md:grid-cols-3 gap-12">
+            <div class="md:col-span-2 space-y-6">
+              <h3
+                class="text-3xl font-bold text-white border-b border-gray-700 pb-2 mb-4"
+              >
+                Tournament Format
+              </h3>
+              <p class="text-gray-300">
+                This is the premier college esports event! The tournament spans
+                three days, starting with qualifiers and culminating in the
+                Grand Finals. The format is standard Battle Royale Squads (4v4),
+                primarily played on the Erangel map. We prioritize fair play,
+                and all matches will be streamed live on the Vedam Lecture
+                Theatre TV, with professional commentary. Teams are encouraged
+                to practice communication, strategy, and precision before the
+                drop.
+              </p>
+
+              <h3 class="text-2xl font-bold text-white mt-8 mb-4">
+                Key Rules:
+              </h3>
+              <ul class="list-disc list-inside space-y-2 text-gray-300">
+                <li>Team Size: 4 players only.</li>
+                <li>Device: Mobile devices only (no emulators).</li>
+                <li>
+                  Fair Play: Strict rules against cheating, VPNs, and
+                  unauthorized modifications.
+                </li>
+                <li>
+                  Match Schedule: Detailed schedule will be released one week
+                  prior to the event.
+                </li>
+              </ul>
+            </div>
+
+            <aside
+              class="md:col-span-1 bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700 mt-8 md:mt-0"
+            >
+              <h3 class="text-2xl font-bold text-green-400 mb-4">The Loot</h3>
+              <p class="text-gray-300 mb-4">
+                Compete for the biggest prize pool in campus gaming history.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">1st Place:</span> Gold Medals +
+                  Trophy
+                </li>
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">2nd Place:</span> Silver Medals
+                </li>
+                <li class="flex justify-between items-center text-gray-200">
+                  <span class="font-semibold">MVP Award:</span> New Gaming
+                  Headset
+                </li>
+              </ul>
+              <a
+                href="#tech-fest-register"
+                class="mt-6 w-full inline-block px-4 py-3 bg-fuchsia-500 text-white text-center font-semibold rounded-lg hover:bg-fuchsia-600 transition duration-300"
+              >
+                Register for BGMI Tournament
+              </a>
+            </aside>
+          </div>
+
+          <!-- Gallery Section -->
+          <div class="mt-20">
+            <h3 class="text-4xl font-bold text-white text-center mb-10">
+              Gallery: Champions on Stage
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <img
+                src="https://i.ibb.co/qYFBt6YB/seeing.jpg"
+                alt="BGMI Image 1"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-green-500/50"
+              />
+              <img
+                src="https://i.ibb.co/jP21pnxR/team2.jpg"
+                alt="BGMI Image 2"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-green-500/50"
+              />
+              <img
+                src="https://i.ibb.co/ccZqqQjc/espopitch.jpg"
+                alt="BGMI Image 3"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-green-500/50"
+              />
+              <img
+                src="https://i.ibb.co/DHGZhPYr/espwinn.jpg"
+                alt="BGMI Image 4"
+                class="rounded-lg w-full h-auto object-cover shadow-xl transition duration-500 hover:scale-[1.03] hover:shadow-green-500/50"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Main Home View Container (This content is hidden when a detail page is targeted) -->
+      <div class="home-content-wrapper">
+        <!-- 1. Homepage / Hero Section -->
+        <section
+          id="home"
+          class="min-h-[80vh] flex items-center text-white p-4 relative overflow-hidden"
+        >
+            <!-- VIDEO BACKGROUND CONTAINER -->
+            <div class="hero-video-container">
+                <video autoplay loop muted playsinline class="hero-video">
+                    <source src="https://www.youtube.com/embed/0pJ6NZQG3w0" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+          <!-- Existing Content (Now wrapped and given z-index to stay on top) -->
+          <div class="max-w-7xl mx-auto text-center py-20 relative z-10">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight">
+              Innovate <span class="text-cyan-400">|</span> Celebrate
+              <span class="text-fuchsia-400">|</span> Conquer
+            </h2>
+            <p
+              class="text-xl md:text-2xl mb-8 font-light max-w-3xl mx-auto text-gray-300"
+            >
+              Explore the three flagship events and get ready for the grand Tech
+              Fest: Innovate 2025!
+            </p>
+            <a
+              href="#tech-fest-register"
+              class="inline-block px-10 py-4 bg-fuchsia-500 text-white font-bold text-lg rounded-full shadow-xl hover:bg-fuchsia-600 transition duration-500 animate-pulse-register"
+            >
+              Register for Tech Fest
+            </a>
+          </div>
+        </section>
+
+        <!-- Event Showcase Summary (Links to Detail Pages) -->
+        <section id="events" class="py-20 px-4 bg-gray-900 scroll-mt-24">
+          <div class="max-w-7xl mx-auto">
+            <h3 class="text-4xl font-bold text-center mb-16 text-gray-100">
+              Our Signature Events
+            </h3>
+
+            <div class="event-grid">
+              <!-- Event 1 Card: Clue Pursuit -->
+              <div
+                class="card-hover bg-gray-800 rounded-xl shadow-lg p-6 text-center transition duration-500 border-t-4 border-cyan-400"
+              >
+                <h4 class="text-2xl font-bold text-gray-100 mb-3">
+                  Clue Pursuit
+                </h4>
+                <p class="text-sm text-gray-400 mb-4">
+                  Entrepreneurship Club | Oct 10th
+                </p>
+                <p class="text-gray-300 mb-6">
+                  A thrilling treasure hunt designed to test your business
+                  acumen and problem-solving skills.
+                </p>
+                <!-- Updated to use fragment ID for CSS routing -->
+                <a
+                  href="#clue-page"
+                  class="mt-auto inline-block text-sm px-6 py-2 bg-cyan-400 text-gray-900 font-semibold rounded-lg hover:bg-cyan-300 transition duration-300"
+                >
+                  View Details & Gallery
+                </a>
+              </div>
+              <!-- Event 2 Card: Vedostav -->
+              <div
+                class="card-hover bg-gray-800 rounded-xl shadow-lg p-6 text-center transition duration-500 border-t-4 border-fuchsia-500"
+              >
+                <h4 class="text-2xl font-bold text-gray-100 mb-3">Vedostav</h4>
+                <p class="text-sm text-gray-400 mb-4">
+                  Cultural Club | Oct 11th
+                </p>
+                <p class="text-gray-300 mb-6">
+                  A grand celebration of Diwali, showcasing traditional
+                  performances, food, and festive joy.
+                </p>
+                <!-- Updated to use fragment ID for CSS routing -->
+                <a
+                  href="#vedostav-page"
+                  class="mt-auto inline-block text-sm px-6 py-2 bg-fuchsia-500 text-white font-semibold rounded-lg hover:bg-fuchsia-600 transition duration-300"
+                >
+                  View Details & Gallery
+                </a>
+              </div>
+              <!-- Event 3 Card: BGMI Tournament -->
+              <div
+                class="card-hover bg-gray-800 rounded-xl shadow-lg p-6 text-center transition duration-500 border-t-4 border-green-500"
+              >
+                <h4 class="text-2xl font-bold text-gray-100 mb-3">
+                  BGMI Tournament
+                </h4>
+                <p class="text-sm text-gray-400 mb-4">
+                  E-Sports Club | Sep 15th
+                </p>
+                <p class="text-gray-300 mb-6">
+                  The ultimate battleground for gamers to showcase their skills
+                  and claim the championship title.
+                </p>
+                <!-- Updated to use fragment ID for CSS routing -->
+                <a
+                  href="#bgmi-page"
+                  class="mt-auto inline-block text-sm px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition duration-300"
+                >
+                  View Details & Gallery
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- New: Tech Fest Registration Form (Replacing old multi-event form) -->
+        <section
+          id="tech-fest-register"
+          class="scroll-mt-24 py-20 px-4 bg-gray-800 text-white"
+        >
+          <div class="max-w-xl mx-auto">
+            <h3 class="text-4xl font-extrabold text-center mb-4 text-cyan-400">
+              Tech Fest: Innovate 2025
+            </h3>
+            <p class="text-center text-gray-400 mb-10 text-lg">
+              Register your team for the most challenging and rewarding
+              technical event of the year!
+            </p>
+
+            <form
+              class="bg-gray-900 p-8 rounded-xl shadow-2xl space-y-6 border border-gray-700 transform transition duration-500 hover:shadow-cyan-500/30"
+            >
+              <!-- Track Selection -->
+              <div>
+                <label
+                  for="track"
+                  class="block text-sm font-medium text-gray-400"
+                  >Choose Your Track</label
+                >
+                <select
+                  id="track"
+                  name="track"
+                  class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-500 focus:ring-cyan-500 transition duration-300 appearance-none"
+                >
+                  <option class="bg-gray-700">AI/ML & Data Science</option>
+                  <option class="bg-gray-700">Web & Mobile Development</option>
+                  <option class="bg-gray-700">IoT & Robotics</option>
+                  <option class="bg-gray-700">Cybersecurity</option>
+                </select>
+              </div>
+
+              <!-- Team Size -->
+              <div>
+                <label
+                  for="team-size"
+                  class="block text-sm font-medium text-gray-400"
+                  >Team Size (1-4 members)</label
+                >
+                <input
+                  type="number"
+                  id="team-size"
+                  name="team-size"
+                  min="1"
+                  max="4"
+                  value="4"
+                  class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-cyan-500 transition duration-300"
+                />
+              </div>
+
+              <!-- Leader Name Field -->
+              <div>
+                <label
+                  for="leader-name"
+                  class="block text-sm font-medium text-gray-400"
+                  >Team Leader Full Name</label
+                >
+                <input
+                  type="text"
+                  id="leader-name"
+                  name="leader-name"
+                  placeholder="Steve Smith"
+                  class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-cyan-500 transition duration-300"
+                />
+              </div>
+
+              <!-- Leader Email Field -->
+              <div>
+                <label
+                  for="leader-id"
+                  class="block text-sm font-medium text-gray-400"
+                  >Team Leader College ID</label
+                >
+                <input
+                  type="text"
+                  id="leader-id"
+                  name="leader-id"
+                  placeholder="name.surname@vedamsot.org"
+                  class="mt-1 block w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-cyan-500 transition duration-300"
+                />
+              </div>
+
+              <!-- Submit Button (Design Only) -->
+              <button
+                type="submit"
+                class="w-full py-3 bg-fuchsia-500 text-white font-bold rounded-lg hover:bg-fuchsia-600 transition duration-300 transform hover:scale-[1.01] shadow-lg"
+              >
+                Submit Team Registration
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- New: FAQ Section -->
+        <section id="faq-section" class="scroll-mt-24 py-20 px-4 bg-gray-900 text-white">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-4xl font-extrabold text-center mb-12 text-fuchsia-400">
+                    Frequently Asked Questions (FAQ)
+                </h3>
+
+                <div class="space-y-4">
+                    <!-- FAQ Item 1: Eligibility -->
+                    <div class="faq-item">
+                        <input type="checkbox" id="faq-1" class="faq-input">
+                        <label for="faq-1" class="faq-label">
+                            <span>Is Tech Fest: Innovate 2025 open to students from other colleges?</span>
+                            <span class="faq-icon">&#9660;</span>
+                        </label>
+                        <div class="faq-content">
+                            <p>
+                                Yes! While a majority of our participants are from VST, the Tech Fest is generally open to students from all colleges across Pune and surrounding regions. Please check the official rules document (available soon) for any specific team composition requirements.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2: Registration -->
+                    <div class="faq-item">
+                        <input type="checkbox" id="faq-2" class="faq-input">
+                        <label for="faq-2" class="faq-label">
+                            <span>Can I register as an individual for the Tech Fest?</span>
+                            <span class="faq-icon">&#9660;</span>
+                        </label>
+                        <div class="faq-content">
+                            <p>
+                                The primary format is based on teams of 4. While individual registration is possible, we highly encourage you to form a team beforehand to tackle the problem statements effectively. Unassigned individuals may be merged into incomplete teams, if possible.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3: BGMI Device Rules -->
+                    <div class="faq-item">
+                        <input type="checkbox" id="faq-3" class="faq-input">
+                        <label for="faq-3" class="faq-label">
+                            <span>Are tablets or iPads allowed for the BGMI Tournament?</span>
+                            <span class="faq-icon">&#9660;</span>
+                        </label>
+                        <div class="faq-content">
+                            <p>
+                                The BGMI Tournament strictly enforces **Mobile Devices Only** rules. This means smartphones are allowed, but tablets, iPads, and any form of emulator (PC software) are prohibited to ensure fair play across all competing teams.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4: Vedostav Attire -->
+                    <div class="faq-item">
+                        <input type="checkbox" id="faq-4" class="faq-input">
+                        <label for="faq-4" class="faq-label">
+                            <span>Is the traditional Indian wear mandatory for Vedostav?</span>
+                            <span class="faq-icon">&#9660;</span>
+                        </label>
+                        <div class="faq-content">
+                            <p>
+                                It is not strictly mandatory, but it is **highly encouraged**! Vedostav is a celebration of our culture and the festive spirit of Diwali. Wearing traditional attire adds greatly to the ambiance and is a fun part of the event.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5: Clue Pursuit -->
+                    <div class="faq-item">
+                        <input type="checkbox" id="faq-5" class="faq-input">
+                        <label for="faq-5" class="faq-label">
+                            <span>What kind of knowledge is required for Clue Pursuit?</span>
+                            <span class="faq-icon">&#9660;</span>
+                        </label>
+                        <div class="faq-content">
+                            <p>
+                                The event requires a mix of general knowledge, lateral thinking, basic business acumen (finance, marketing), and physical coordination. It's more about smart teamwork and resourcefulness than specialized academic knowledge.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 6: Prize Distribution -->
+                    <div class="faq-item">
+                        <input type="checkbox" id="faq-6" class="faq-input">
+                        <label for="faq-6" class="faq-label">
+                            <span>When are the prizes distributed for these events?</span>
+                            <span class="faq-icon">&#9660;</span>
+                        </label>
+                        <div class="faq-content">
+                            <p>
+                                Prizes for events like Clue Pursuit and the BGMI Tournament are typically distributed immediately following the grand finale of the respective event. Details will be communicated to the winning teams by the organizing club heads.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-white p-6 text-center">
+      <p class="text-sm">
+        &copy; 2025 College Event Showcase. Designed for Hackathon using HTML &
+        CSS. Made by Aareev, Revansh, Mohit, Avika & Nishtha
+      </p>
+    </footer>
+</body>
+</html>

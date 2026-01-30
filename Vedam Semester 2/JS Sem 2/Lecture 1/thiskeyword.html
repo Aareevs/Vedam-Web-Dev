@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <Script>
+        const x = {
+            name: "Alice in Wonderland",
+            role: "JS Developer",
+            exp: 30,
+            show: function() {
+                console.log("This inside method:", this);
+                //const that = this; // Capture the context
+                setTimeout(() => {
+                    console.log("This inside setTimeout function:", this);
+                    console.log("Hi i am", this.name);
+                }, 2000);
+            }
+        };
+        const y = {
+            name: "Bob the Builder",
+            role: "Frontend Developer",
+            exp: 3000,
+            show: function () {
+                console.log("Hi i am", this.name);
+            },
+        };
+
+        console.log(x.name);
+        console.log(x.role);
+        console.log(x.exp);
+    </Script>
+</body>
+</html>

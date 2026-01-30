@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested Function Question</title>
+</head>
+<body>
+    <p>
+        Write JS Code tht: <br>
+        -> declares variable x in global scope with value 10 <br>
+        -> declares function outer() that <br>
+              -> declares variable x with value 20 <br>
+              -> declares function inner() that <br>
+        -> The inner() function must <br>
+              -> print value of x from outer() function scope <br>
+        -> call outer() function
+    </p>
+
+    <script>
+        var x = 10;
+
+        function outer() {
+            var x = 20;
+
+            function inner() {
+                console.log(x);
+            }
+
+            inner();
+        }
+        outer();
+    </script>
+</body>
+</html>

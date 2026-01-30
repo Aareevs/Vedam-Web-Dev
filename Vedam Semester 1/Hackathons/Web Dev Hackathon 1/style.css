@@ -1,0 +1,94 @@
+/* Custom CSS for Animations and Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background color (gray-900) */
+        }
+
+        /* Pulsing animation for the main registration button (Updated color to cyan) */
+        @keyframes pulse-register {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); /* Tailwind cyan-400 */
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(34, 211, 238, 0);
+            }
+        }
+
+        .animate-pulse-register {
+            animation: pulse-register 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        /* Smooth scroll margin for fixed header */
+        .scroll-mt-24 {
+            scroll-margin-top: 6rem; /* Adjust based on header height */
+        }
+
+        /* General card hover effect */
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.4); /* Stronger dark shadow */
+        }
+
+        /* Responsive event grid */
+        .event-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 768px) {
+            .event-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* --- CSS Routing (Page Switching) --- */
+        /* Pages are absolutely positioned and hidden by default */
+        .page {
+            display: none;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 10; /* Below fixed header (z-50) */
+            min-height: 100vh;
+            background-color: #111827;
+            padding-top: 5rem;
+        }
+
+        /* Only show the page that matches the URL fragment (e.g., #clue-page) */
+        .page:target {
+            display: block;
+        }
+        
+        /* The main view content wrapper */
+        .home-content-wrapper {
+            display: block;
+        }
+
+        /* Hide the home content if any other page is targeted */
+        #clue-page:target ~ .home-content-wrapper,
+        #vedostav-page:target ~ .home-content-wrapper,
+        #bgmi-page:target ~ .home-content-wrapper {
+            display: none;
+        }
+
+        /* --- Mobile Menu Checkbox Hack --- */
+        #menu-toggle {
+            display: none; /* Hide the actual checkbox */
+        }
+
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        
+        /* When the hidden checkbox is checked, show the mobile menu */
+        #menu-toggle:checked ~ #mobile-menu {
+            max-height: 500px; /* Max height large enough to show content */
+            opacity: 1;
+            padding-bottom: 1rem;
+        }

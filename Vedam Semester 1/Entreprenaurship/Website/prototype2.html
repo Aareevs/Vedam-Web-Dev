@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Cell VST - Vedam School of Technology</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .hero-content {
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2.5rem;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 10%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #667eea;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* Vision Section */
+        .vision {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .vision-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 2;
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .achievement-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .achievement-card i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-card h3 {
+            font-size: 2rem;
+            color: #764ba2;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gallery */
+        .gallery {
+            background: #f9f9f9;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            height: 250px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item::after {
+            content: 'Event Photo';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        /* Speakers Carousel */
+        .speakers-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .speakers-carousel {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .speaker-card {
+            min-width: 300px;
+            margin: 0 1rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .speaker-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 1rem;
+        }
+
+        /* Team Section */
+        .team-container {
+            margin-top: 3rem;
+        }
+
+        .leadership {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .president {
+            width: 350px;
+        }
+
+        .vice-president {
+            width: 300px;
+        }
+
+        .core-member {
+            width: 280px;
+        }
+
+        .team-member {
+            width: 250px;
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 1rem;
+        }
+
+        .president .member-photo {
+            width: 180px;
+            height: 180px;
+        }
+
+        .vice-president .member-photo {
+            width: 160px;
+            height: 160px;
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .member-role {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .linkedin-icon {
+            font-size: 2rem;
+            color: #0077b5;
+            transition: all 0.3s;
+        }
+
+        .linkedin-icon:hover {
+            transform: scale(1.2);
+            color: #005885;
+        }
+
+        .core-team, .other-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .team-category {
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 2rem;
+            color: #764ba2;
+        }
+
+        /* Event Registration */
+        .event-register {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            text-align: center;
+        }
+
+        .register-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .leadership {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">E-Cell VST</div>
+        <ul class="nav-links">
+            <li><a href="about.html" target="_blank">About Us</a></li>
+            <li><a href="events.html" target="_blank">Events</a></li>
+            <li><a href="blogs.html" target="_blank">Blogs</a></li>
+            <li><a href="register.html" target="_blank">Register/Login</a></li>
+            <li><a href="resources.html" target="_blank">Resources</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>E-Cell VST</h1>
+            <p>Vedam School of Technology</p>
+            <p>Empowering Future Entrepreneurs</p>
+            <button class="cta-button">Join Our Journey</button>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="vision">
+        <h2 class="section-title">Our Vision</h2>
+        <div class="vision-content">
+            <p>At E-Cell VST, we envision a future where every student discovers their entrepreneurial potential. We strive to create an ecosystem that fosters innovation, encourages risk-taking, and transforms ideas into successful ventures. Our mission is to nurture the next generation of change-makers who will drive economic growth and social impact.</p>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements">
+        <h2 class="section-title">Our Achievements</h2>
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <i class="fas fa-trophy"></i>
+                <h3>50+</h3>
+                <p>Events Organized</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-users"></i>
+                <h3>2000+</h3>
+                <p>Students Reached</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>25+</h3>
+                <p>Startups Incubated</p>
+            </div>
+            <div class="achievement-card">
+                <i class="fas fa-award"></i>
+                <h3>15+</h3>
+                <p>Awards Won</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+        </div>
+    </section>
+
+    <!-- Guest Speakers Section -->
+    <section class="speakers-section">
+        <h2 class="section-title" style="color: white;">Guest Speakers</h2>
+        <div class="speakers-carousel">
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Dr. Rajesh Kumar</h3>
+                <p>Serial Entrepreneur</p>
+            </div>
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Ms. Priya Sharma</h3>
+                <p>Tech Innovator</p>
+            </div>
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Mr. Arjun Mehta</h3>
+                <p>Startup Mentor</p>
+            </div>
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Dr. Anjali Verma</h3>
+                <p>Industry Expert</p>
+            </div>
+            <!-- Duplicate for seamless loop -->
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Dr. Rajesh Kumar</h3>
+                <p>Serial Entrepreneur</p>
+            </div>
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Ms. Priya Sharma</h3>
+                <p>Tech Innovator</p>
+            </div>
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Mr. Arjun Mehta</h3>
+                <p>Startup Mentor</p>
+            </div>
+            <div class="speaker-card">
+                <div class="speaker-img"></div>
+                <h3>Dr. Anjali Verma</h3>
+                <p>Industry Expert</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-container">
+            <!-- Leadership -->
+            <div class="leadership">
+                <div class="member-card president">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">John Doe</h3>
+                    <p class="member-role">President</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card vice-president">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Jane Smith</h3>
+                    <p class="member-role">Vice President</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card vice-president">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Mike Johnson</h3>
+                    <p class="member-role">Vice President</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Core Team -->
+            <h3 class="team-category">Core Members</h3>
+            <div class="core-team">
+                <div class="member-card core-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Sarah Williams</h3>
+                    <p class="member-role">Operations Head</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card core-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">David Brown</h3>
+                    <p class="member-role">Tech Lead</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card core-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Emily Davis</h3>
+                    <p class="member-role">Marketing Head</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card core-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Alex Martinez</h3>
+                    <p class="member-role">Outreach Head</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Other Members -->
+            <h3 class="team-category">Team Members</h3>
+            <div class="other-members">
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Lisa Anderson</h3>
+                    <p class="member-role">Copy Head</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Chris Taylor</h3>
+                    <p class="member-role">Social Media Head</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Maya Patel</h3>
+                    <p class="member-role">Graphics & Video Designer</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Ryan Lee</h3>
+                    <p class="member-role">Finance Manager</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Sophia Chen</h3>
+                    <p class="member-role">Event Manager</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">James Wilson</h3>
+                    <p class="member-role">Logistics Coordinator</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Olivia Moore</h3>
+                    <p class="member-role">Sponsorship Lead</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Ethan Garcia</h3>
+                    <p class="member-role">Guest Relations Lead</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+                <div class="member-card team-member">
+                    <div class="member-photo"></div>
+                    <h3 class="member-name">Ava Robinson</h3>
+                    <p class="member-role">Institutional Partnerships Lead</p>
+                    <a href="https://linkedin.com" target="_blank">
+                        <i class="fab fa-linkedin linkedin-icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Registration -->
+    <section class="event-register">
+        <h2 class="section-title">Register for Next Event</h2>
+        <div class="register-form">
+            <form>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year of Study</label>
+                    <select id="year" required>
+                        <option value="">Select Year</option>
+                        <option value="1">First Year</option>
+                        <option value="2">Second Year</option>
+                        <option value="3">Third Year</option>
+                        <option value="4">Fourth Year</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Register Now</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <h2 class="section-title" style="color: white;">Contact Us</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Address</h3>
+                <p>Vedam School of Technology</p>
+                <p>Campus Address Line 1</p>
+                <p>City, State - PIN Code</p>
+            </div>
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><i class="fas fa-envelope"></i> ecell@vst.edu.in</p>
+                <p><i class="fas fa-phone"></i> +91 1234567890</p>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="contact-info">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 4:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 E-Cell VST - Vedam School of Technology. All rights reserved.</p>
+    </footer>
+</body>
+</html>

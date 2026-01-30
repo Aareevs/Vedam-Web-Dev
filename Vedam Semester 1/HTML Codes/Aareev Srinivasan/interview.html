@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        #title{
+            font-size: large;
+        }
+        #add{
+            opacity: 0.5;
+        }
+        #time{
+            color: blueviolet;
+            background-color: palevioletred;
+            border-radius: 20%;
+        }
+        #box1 {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            border: 1px solid lightgray;
+        }
+         #box2 {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            border: 1px solid lightgray;
+        }
+         #box3 {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            border: 1px solid lightgray;
+        }
+        #mcq{
+            color: blueviolet;
+            background-color: palevioletred;
+            border-radius: 20%;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h3 id="title">Add Questions to Your Quiz</h3>
+        <p id="add">1 questions added</p>
+<br>
+        <div id="box1">
+            <p>Q1</p>
+            <div id="mcq">MCQ</div>
+            <p>What does TypeScript add to JavaScript?</p>
+            <div id="time">30 sec</div>
+        </div>
+
+        <div id="box2">
+            <p>Q2</p>
+            <div id="mcq">MCQ</div>
+            <p>Which CSS property controls the text size?</p>
+            <div id="time">30 sec</div>
+        </div>
+
+        <div id="box3">
+            <p>Q3</p>
+            <div id="mcq">MCQ</div>
+            <p>Which of the following is NOT a valid Javascript data type?</p>
+            <div id="time">30 sec</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("box1").addEventListener("mouseover", () => {
+            box1.style.background = 'lightyellow'
+        })
+        box1.addEventListener("mouseout", () => {
+            box1.style.backgroundColor = 'white'
+        })
+        document.getElementById("box2").addEventListener("mouseover", () => {
+            box2.style.background = 'lightyellow'
+        })
+        box2.addEventListener("mouseout", () => {
+            box2.style.backgroundColor = 'white'
+        })
+        document.getElementById("box3").addEventListener("mouseover", () => {
+            box3.style.background = 'lightyellow'
+        })
+        box3.addEventListener("mouseout", () => {
+            box3.style.backgroundColor = 'white'
+        })
+    </script>
+</body>
+</html>

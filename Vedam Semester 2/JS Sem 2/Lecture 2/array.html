@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+          let arr = [1, 2, 3, 4, 5, 6, 7];
+
+        //let arr2 = new Array(10,20,30);
+        //console.log(arr2);
+
+        //To get a part of an array
+        console.log(arr);
+        let subarr = arr.slice(2, 6); //returns sliced arrayfrom index 2 to index 6
+        console.log(subarr);
+
+        //Splice
+        //remove elements
+        arr.splice(2, 3); //from index 2 remove 3 elements
+        console.log("spliced array: " + arr);
+
+        //Remove and add elements splice(StartIdx, noofelem, elem1, elem2, ...
+        
+        //1,2,3,4,5,6,7
+        arr.splice(2, 2, 10, 20, 30); //from index 2 remove 2 elements and add 10,20,30
+        console.log("after removing and adding elements: " + arr);
+    </script>
+</body>
+</html>

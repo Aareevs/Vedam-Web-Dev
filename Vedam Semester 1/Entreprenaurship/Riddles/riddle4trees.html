@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Treasure Hunt</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure custom colors and font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#4f46e5', // Indigo 600 (Main theme color)
+                        'secondary': '#10b981', // Emerald 500 (Highlight color)
+                        'accent': '#facc15',  // Amber 400 (Riddle border/detail)
+                        'dark-bg': '#1f2937', // Gray 800 (Deep background)
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Apply smooth transitions for a better user experience */
+        .riddle-container {
+            transition: all 0.5s ease-in-out;
+        }
+        /* Custom gradient for the button */
+        .riddle-btn {
+            background-image: linear-gradient(to right, #4f46e5 0%, #7c3aed 100%); /* Indigo to Violet */
+        }
+        .riddle-btn:hover {
+            background-image: linear-gradient(to right, #7c3aed 0%, #4f46e5 100%);
+        }
+    </style>
+</head>
+<body class="bg-dark-bg min-h-screen flex items-center justify-center p-4 font-sans">
+    
+    <div class="w-full max-w-lg bg-white shadow-2xl rounded-3xl p-6 sm:p-8 space-y-6 sm:space-y-8 transform transition duration-300 ease-in-out">
+        
+        <!-- Header Section -->
+        <header class="text-center">
+            <div class="text-secondary text-5xl mb-3 animate-pulse">
+                &#x1F3C6; <!-- Trophy Emoji Icon -->
+            </div>
+            <!-- IMPROVED MOBILE FONT SIZE: text-3xl on mobile, scales to 4xl on larger screens -->
+            <h1 class="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">
+                The Great Campus Treasure Hunt
+            </h1>
+            <!-- IMPROVED MOBILE FONT SIZE: text-lg on mobile, scales to xl on larger screens -->
+            <p class="mt-2 text-lg sm:text-xl font-medium text-primary">
+                Ready to see the third clue?
+            </p>
+        </header>
+
+        <!-- Riddle Display Area -->
+        <div id="riddle-area" class="riddle-container hidden opacity-0 transition duration-500 ease-in-out">
+            <div class="bg-gray-50 border-t-8 border-accent rounded-xl p-6 shadow-xl">
+                 <!-- IMPROVED MOBILE FONT SIZE: text-xl on mobile, scales to 2xl on larger screens -->
+                <h2 class="text-xl sm:text-2xl font-extrabold text-secondary mb-3">The Third clue reveals itself...</h2>
+                 <!-- IMPROVED MOBILE FONT SIZE: text-lg on mobile, scales to xl on larger screens -->
+                <blockquote class="text-gray-800 italic text-lg sm:text-xl leading-relaxed">
+                    <!-- The Riddle Content -->
+                    <p id="riddle-text">
+                        I'm a narrow space the campus forgot,<br> 
+                        Guarded by the root of the first perfect cube no' of tall trees on the spot.<br> 
+                        A metal beast with an engine sleeps in my shade,<br>
+                        Near the Library's wall, where stories are made.
+                    </p>
+                </blockquote>
+                <div class="mt-4 text-sm text-gray-600 font-semibold text-right">
+                    — The Puzzlemaster
+                </div>
+                <!-- NEW: Submission Link Section -->
+                <div class="mt-6 pt-4 border-t border-gray-200 text-center">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScfdXMAD87IGKaUGNoj4CDTaEOx72WEfUaQV7AzSUawHnuA3w/viewform?usp=dialog" 
+                       target="_blank" 
+                       class="inline-block w-full sm:w-auto px-6 py-3 bg-primary text-white font-bold rounded-lg shadow-xl hover:bg-indigo-700 transition duration-150 ease-in-out transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50">
+                        Also fill this form!
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button to Reveal Riddle -->
+        <div class="flex justify-center">
+            <button 
+                id="show-riddle-btn" 
+                onclick="showRiddle()" 
+                class="w-full sm:w-auto px-10 py-4 text-white font-bold rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50 transition duration-150 ease-in-out transform hover:scale-[1.05] active:scale-[0.98] riddle-btn">
+                Show Riddle
+            </button>
+        </div>
+        
+    </div>
+
+    <script>
+        // Get elements
+        const button = document.getElementById('show-riddle-btn');
+        const riddleArea = document.getElementById('riddle-area');
+
+        // Function to reveal the riddle
+        function showRiddle() {
+            // 1. Check if the button is already disabled (to prevent multiple clicks)
+            if (button.disabled) {
+                console.log("Riddle already shown.");
+                return;
+            }
+
+            // 2. Make the riddle container visible and transition its opacity
+            riddleArea.classList.remove('hidden');
+            // Use a slight delay to ensure the 'hidden' removal registers before starting the opacity transition
+            setTimeout(() => {
+                riddleArea.classList.add('opacity-100');
+                riddleArea.classList.remove('opacity-0');
+            }, 10);
+            
+            // 3. Update the button text and style
+            button.textContent = 'Riddle Revealed!';
+            button.classList.remove('riddle-btn', 'hover:shadow-xl', 'hover:scale-[1.05]');
+            // Set the final state of the button
+            button.classList.add('bg-gray-400', 'cursor-not-allowed', 'shadow-inner', 'scale-100');
+            
+            // 4. Disable the button
+            button.disabled = true;
+
+            console.log("Riddle has been displayed.");
+        }
+    </script>
+</body>
+</html>

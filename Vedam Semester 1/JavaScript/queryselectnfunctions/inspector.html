@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <Style>
+        body{
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .colorBox{
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+            margin-top: 20px;
+        }
+    </Style>
+</head>
+<body>
+    <h2>Event Listeners Example</h2>
+    <button id="myButton">Click Me!</button>
+    <div class="colorBox"></div>
+    
+    <script>
+        let button = document.getElementById('myButton');
+        let box = document.querySelector('.colorBox');
+        button.addEventListener('click', function() {
+            if (box.style.backgroundColor === 'green') {
+                box.style.backgroundColor = 'lightblue';
+            } else {
+                box.style.backgroundColor = 'green';
+            }
+        });
+    </script>
+</body>
+</html>

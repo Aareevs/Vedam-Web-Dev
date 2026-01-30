@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        a:hover{
+            text-decoration: underline;
+            color: red;
+        }
+        li:first-child{
+            color: green;
+            text-decoration: bold;
+        }
+        li:nth-child(2){
+            color: blue;
+            text-decoration:underline;
+            text-decoration: bold;
+        }
+        li{
+            color: blueviolet;
+        }
+        /* Applying Pseudo Class takes preference over general internal CSS to elements */
+    </style>
+</head>
+<body>
+    <h1>Pseudo selector demo</h1>
+    <p>Para to demonstarte pseudo</p>
+
+    <a href="#">Hover over</a>
+
+    <ul>
+        <li>First</li>
+        <li>Second</li>
+        <li>Third</li>
+
+        <p>Para to demonstatr pseudo</p>
+    </ul>
+</body>
+</html>

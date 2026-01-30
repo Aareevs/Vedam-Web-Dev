@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex</title>
+    <style>
+        .flex-container{
+            display: flex;
+            border: 5px solid red;
+            justify-content: space-between;
+            flex-direction: row;
+            height: 150px;
+            align-items:flex-start;
+        }
+        div > h1{
+            flex-basis: 130px;
+        }
+        .flex4{
+  
+            order: 3;
+            flex-grow: 1;
+        }
+    </style>
+    <!-- Explores the use of flex styles and flex boxes -->
+</head>
+<body>
+    <h1>Flex Playground</h1>
+
+     <!-- Main Div -->
+    <div class="flex-container">
+        <div class="flex1" style="background-color: lightcoral;">I AM PARA 1</div>
+        <div class="flex2" style="background-color: lightblue;">this is para 2</div>
+        <div class="flex3" style="background-color: lightgreen;">I am Para 3</div>
+        <div class="flex4" style="background-color: lightpink;">I am Para 4</div>
+        <div class="flex5" style="background-color: lightseagreen;">This is para 5</div>
+        <div class="flex6" style="background-color: blue;">This is Para 6</div>
+        <div class="flex7" style="background-color: lightseagreen;">I am Para 7</div>
+        <div class="flex8" style="background-color: chartreuse;">I am Paragraph 8</div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dummy Weather App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .weather-box {
+            background: white;
+            padding: 25px;
+            width: 320px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 15px;
+        }
+
+        img {
+            width: 64px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="weather-box">
+    <h2>Weather App 🌤️</h2>
+
+    <input type="text" id="city" placeholder="Enter city name">
+    <br>
+    <button onclick="getWeather()">Search</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    const API_KEY = "3ffa041182664e06b5f44837262301";
+
+    function getWeather() {
+        const city = document.getElementById("city").value;
+
+        if (city === "") {
+            alert("Please enter a city name");
+            return;
+        }
+
+        const url = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // for practice/debugging
+
+                const weatherHTML = `
+                    <h3>${data.location.name}, ${data.location.country}</h3>
+                    <p>${data.location.localtime}</p>
+                    <img src="${data.current.condition.icon}">
+                    <p><strong>${data.current.condition.text}</strong></p>
+                    <p>Temperature: ${data.current.temp_c} °C</p>
+                    <p>Feels Like: ${data.current.feelslike_c} °C</p>
+                    <p>Humidity: ${data.current.humidity}%</p>
+                    <p>Wind: ${data.current.wind_kph} km/h</p>
+                `;
+
+                document.getElementById("result").innerHTML = weatherHTML;
+            })
+            .catch(error => {
+                document.getElementById("result").innerHTML =
+                    "<p>City not found ❌</p>";
+                console.error(error);
+            });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Cell VST - Vedam School of Technology</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --accent-color: #f59e0b;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --bg-light: #f9fafb;
+    --bg-white: #ffffff;
+    --spacing-unit: 8px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-white);
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: calc(var(--spacing-unit) * 2) 0;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 calc(var(--spacing-unit) * 3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: calc(var(--spacing-unit) * 4);
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.hero {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+    color: white;
+    padding: calc(var(--spacing-unit) * 15) calc(var(--spacing-unit) * 3);
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    opacity: 0.95;
+}
+
+.hero-tagline {
+    font-size: 1.25rem;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+}
+
+.cta-button {
+    display: inline-block;
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
+    background-color: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 calc(var(--spacing-unit) * 3);
+}
+
+section {
+    padding: calc(var(--spacing-unit) * 10) 0;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 6);
+    color: var(--text-dark);
+}
+
+.vision {
+    background-color: var(--bg-light);
+}
+
+.vision p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-light);
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc(var(--spacing-unit) * 4);
+}
+
+.achievement-card {
+    background-color: var(--bg-white);
+    padding: calc(var(--spacing-unit) * 4);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.achievement-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: calc(var(--spacing-unit) * 1);
+}
+
+.achievement-card p {
+    font-size: 1rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.guest-speakers {
+    background-color: var(--bg-light);
+}
+
+.speakers-slider {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc(var(--spacing-unit) * 4);
+    animation: scroll 20s linear infinite;
+}
+
+.speaker-slide {
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    padding: calc(var(--spacing-unit) * 3);
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.speaker-slide:hover {
+    transform: scale(1.05);
+}
+
+.speaker-slide img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.speaker-slide h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+    color: var(--text-dark);
+}
+
+.speaker-slide p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: calc(var(--spacing-unit) * 3);
+}
+
+.gallery-item {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.team {
+    background-color: var(--bg-light);
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    margin: calc(var(--spacing-unit) * 6) 0 calc(var(--spacing-unit) * 4) 0;
+    color: var(--text-dark);
+}
+
+.leadership {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--spacing-unit) * 4);
+    margin-bottom: calc(var(--spacing-unit) * 6);
+}
+
+.vice-presidents {
+    display: flex;
+    gap: calc(var(--spacing-unit) * 4);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.member-card {
+    background-color: var(--bg-white);
+    border-radius: 12px;
+    padding: calc(var(--spacing-unit) * 3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.member-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.member-card.large {
+    width: 280px;
+}
+
+.member-card.large img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.member-card.large h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+}
+
+.member-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.member-card.small img {
+    width: 100px;
+    height: 100px;
+}
+
+.member-info h3,
+.member-info h4,
+.member-info h5 {
+    color: var(--text-dark);
+    margin-bottom: calc(var(--spacing-unit) * 1);
+}
+
+.member-info h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.member-info h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.role {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.linkedin-icon {
+    color: #0077b5;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.linkedin-icon:hover {
+    color: #005582;
+    transform: scale(1.1);
+}
+
+.core-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: calc(var(--spacing-unit) * 4);
+    margin-bottom: calc(var(--spacing-unit) * 6);
+}
+
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: calc(var(--spacing-unit) * 3);
+}
+
+.register-event {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    color: white;
+}
+
+.register-event h2 {
+    color: white;
+}
+
+.register-event p {
+    text-align: center;
+    font-size: 1.125rem;
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    opacity: 0.95;
+}
+
+.register-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+}
+
+.register-form input,
+.register-form select {
+    padding: calc(var(--spacing-unit) * 2);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.submit-btn {
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+}
+
+.contact {
+    background-color: var(--bg-light);
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: calc(var(--spacing-unit) * 6);
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 3);
+}
+
+.info-item h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: calc(var(--spacing-unit) * 1);
+    color: var(--text-dark);
+}
+
+.info-item p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    gap: calc(var(--spacing-unit) * 2);
+}
+
+.social-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--secondary-color);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: calc(var(--spacing-unit) * 2);
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+footer {
+    background-color: var(--text-dark);
+    color: white;
+    text-align: center;
+    padding: calc(var(--spacing-unit) * 4) 0;
+}
+
+footer p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: calc(var(--spacing-unit) * 2);
+        font-size: 0.9rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.25rem;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+
+    .leadership {
+        flex-direction: column;
+    }
+
+    .vice-presidents {
+        flex-direction: column;
+    }
+
+    .member-card.large {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">E-Cell VST</div>
+            <ul class="nav-menu">
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="register.html">Register/Login</a></li>
+                <li><a href="#placeholder">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>E-Cell VST</h1>
+            <p>Vedam School of Technology</p>
+            <p class="hero-tagline">Empowering Future Entrepreneurs</p>
+            <a href="register.html" class="cta-button">Join Us Today</a>
+        </div>
+    </section>
+
+    <section class="vision">
+        <div class="container">
+            <h2>Our Vision</h2>
+            <p>To foster an entrepreneurial mindset among students and empower them to transform innovative ideas into successful ventures. We aim to create a vibrant ecosystem that nurtures creativity, innovation, and leadership in the field of entrepreneurship.</p>
+        </div>
+    </section>
+
+    <section class="achievements">
+        <div class="container">
+            <h2>Our Achievements</h2>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-number">50+</div>
+                    <p>Events Organized</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-number">2000+</div>
+                    <p>Students Reached</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-number">30+</div>
+                    <p>Industry Mentors</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-number">15+</div>
+                    <p>Startups Incubated</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="guest-speakers">
+        <div class="container">
+            <h2>Our Distinguished Guest Speakers</h2>
+            <div class="speakers-slider">
+                <div class="speaker-slide">
+                    <img src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Speaker 1">
+                    <h3>Dr. Rajesh Kumar</h3>
+                    <p>Tech Entrepreneur & Investor</p>
+                </div>
+                <div class="speaker-slide">
+                    <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Speaker 2">
+                    <h3>Ms. Priya Sharma</h3>
+                    <p>CEO, Innovation Labs</p>
+                </div>
+                <div class="speaker-slide">
+                    <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Speaker 3">
+                    <h3>Mr. Amit Patel</h3>
+                    <p>Startup Mentor & Angel Investor</p>
+                </div>
+                <div class="speaker-slide">
+                    <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Speaker 4">
+                    <h3>Dr. Sneha Gupta</h3>
+                    <p>Social Entrepreneur</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <div class="container">
+            <h2>Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Event 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Event 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/1181622/pexels-photo-1181622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Event 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Event 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/1181605/pexels-photo-1181605.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Event 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Event 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <div class="container">
+            <h2>Our Team</h2>
+
+            <div class="leadership">
+                <div class="member-card large">
+                    <img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=400" alt="President">
+                    <div class="member-info">
+                        <h3>President Name</h3>
+                        <p class="role">President</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="vice-presidents">
+                    <div class="member-card large">
+                        <img src="https://images.pexels.com/photos/2182973/pexels-photo-2182973.jpeg?auto=compress&cs=tinysrgb&w=400" alt="VP 1">
+                        <div class="member-info">
+                            <h3>VP Name 1</h3>
+                            <p class="role">Vice President</p>
+                            <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="member-card large">
+                        <img src="https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg?auto=compress&cs=tinysrgb&w=400" alt="VP 2">
+                        <div class="member-info">
+                            <h3>VP Name 2</h3>
+                            <p class="role">Vice President</p>
+                            <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-title">Core Members</h3>
+            <div class="core-members">
+                <div class="member-card">
+                    <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Operations Head">
+                    <div class="member-info">
+                        <h4>Operations Head Name</h4>
+                        <p class="role">Operations Head</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Tech Lead">
+                    <div class="member-info">
+                        <h4>Tech Lead Name</h4>
+                        <p class="role">Tech Lead</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Marketing Head">
+                    <div class="member-info">
+                        <h4>Marketing Head Name</h4>
+                        <p class="role">Marketing Head</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <img src="https://images.pexels.com/photos/2182975/pexels-photo-2182975.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Outreach Head">
+                    <div class="member-info">
+                        <h4>Outreach Head Name</h4>
+                        <p class="role">Outreach Head</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-title">Team Members</h3>
+            <div class="team-members">
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Copy Head">
+                    <div class="member-info">
+                        <h5>Copy Head Name</h5>
+                        <p class="role">Copy Head</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Social Media Head">
+                    <div class="member-info">
+                        <h5>Social Media Head</h5>
+                        <p class="role">Social Media Head</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Graphics Designer">
+                    <div class="member-info">
+                        <h5>Graphics Designer</h5>
+                        <p class="role">Graphics & Video Designer</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/2182974/pexels-photo-2182974.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Finance Manager">
+                    <div class="member-info">
+                        <h5>Finance Manager</h5>
+                        <p class="role">Finance Manager</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/3184431/pexels-photo-3184431.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Event Manager">
+                    <div class="member-info">
+                        <h5>Event Manager</h5>
+                        <p class="role">Event Manager</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/1181695/pexels-photo-1181695.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Logistics Coordinator">
+                    <div class="member-info">
+                        <h5>Logistics Coordinator</h5>
+                        <p class="role">Logistics Coordinator</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/3184635/pexels-photo-3184635.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Sponsorship Lead">
+                    <div class="member-info">
+                        <h5>Sponsorship Lead</h5>
+                        <p class="role">Sponsorship Lead</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Guest Relations Lead">
+                    <div class="member-info">
+                        <h5>Guest Relations Lead</h5>
+                        <p class="role">Guest Relations Lead</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="member-card small">
+                    <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Partnerships Lead">
+                    <div class="member-info">
+                        <h5>Partnerships Lead</h5>
+                        <p class="role">Institutional Partnerships Lead</p>
+                        <a href="https://linkedin.com" target="_blank" class="linkedin-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="register-event">
+        <div class="container">
+            <h2>Register for Next Event</h2>
+            <p>Don't miss out on our upcoming event! Register now to secure your spot.</p>
+            <form class="register-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <select required>
+                    <option value="">Select Event</option>
+                    <option value="startup-weekend">Startup Weekend</option>
+                    <option value="pitch-competition">Pitch Competition</option>
+                    <option value="mentor-session">Mentor Session</option>
+                    <option value="workshop">Entrepreneurship Workshop</option>
+                </select>
+                <button type="submit" class="submit-btn">Register Now</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <h4>Email</h4>
+                        <p>ecell@vedamtech.edu</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Phone</h4>
+                        <p>+91 98765 43210</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Address</h4>
+                        <p>Vedam School of Technology<br>Campus Address, City, State</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#">Instagram</a>
+                            <a href="#">LinkedIn</a>
+                            <a href="#">Twitter</a>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea placeholder="Message" rows="5" required></textarea>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 E-Cell VST - Vedam School of Technology. All rights reserved.</p>
+    </footer>
+</body>
+</html>

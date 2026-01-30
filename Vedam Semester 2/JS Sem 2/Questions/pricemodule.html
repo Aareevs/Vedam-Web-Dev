@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Order Pricing Module</title>
+</head>
+<body>
+     <!--  Have to use Funcrion Declaration as it is hoisted
+      Have to use Function Expressions, Arrow Function, IIFE
+      Have to do this in 4 ways -->
+    
+      <h2>Rules</h2>
+      <p> Price per item -> ₹500 </p>
+        <p> Discount -> 10% if quantity >= 10 </p>
+        <p> Tax: Apply 18% GST after discount</p>
+        <p> Output: Return final payable amount </p>
+     <script>
+        // Function Declaration
+        function calculatePrice(quantity) {
+            const pricePerItem = 500;
+            let totalPrice = pricePerItem * quantity; 
+            if (quantity >= 10) {
+                totalPrice *= 0.9; // Apply 10% discount
+            }
+            totalPrice *= 1.18; // Apply 18% GST
+            return totalPrice;
+        }
+        console.log("Function Declaration:", calculatePrice(12));
+
+    </script>
+</body>
+</html>

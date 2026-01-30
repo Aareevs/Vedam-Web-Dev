@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log("   Hello Developers.    ")
+
+    let str = "   Hello Developers cat dog   "
+
+    console.log(str.length) //length
+
+    console.log(str.charAt(9)) //character
+
+    console.log(str.charCodeAt(9)) //ASCII code
+
+    //Substring
+
+    console.log(str.substring(10)); //All characters from index 10 to end
+
+    // start<end
+    console.log(str.substring(9, 11)); //Characters from index 9 to 11 (11 not included)
+
+    // start>end
+    console.log(str.substring(11, 9)); //the indices would be swapped before applying substring func
+
+    // -ve
+    console.log(str.substring(-100)); //prints 0 to end of string (-ve numbers -> 0)
+
+    //Slice Function
+    let str1 = str.slice(10);
+    console.log(str1);
+
+    //start<end
+    let sl1 = str.slice(10, 12);
+    console.log(sl1);
+
+    //start>end
+    let sl2 = str.slice(12, 10);
+    console.log(sl2); //empty string
+
+    //-ve indexing
+    let sl3 = str.slice(-100); //prints from the end of string, returns 10 characters from end of string
+    console.log(sl3); 
+
+
+    console.log(str.toLowerCase());
+    console.log(str.toUpperCase());
+    console.log(str.trim()); //removes spaces from start and end
+    console.log(str.includes("dog"));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TATVA - Leaderboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #e37119;
+            --dark-bg: #0f0f1a;
+            --card-bg: rgba(30, 30, 46, 0.7);
+            --text-light: #f0f0f0;
+            --text-muted: #9ca3af;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 80% 40%, rgba(227, 113, 25, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 20% 80%, rgba(128, 0, 128, 0.3) 0%, transparent 50%);
+            background-size: 100% 100%;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        h1, h2, h3, .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Header and Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-font {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        
+        .logo-font span {
+            color: var(--secondary-color);
+        }
+        
+        #desktop-nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        #desktop-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        #desktop-nav a:hover {
+            color: var(--secondary-color);
+        }
+        
+        #desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        #desktop-nav a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-register-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .nav-register-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(227, 113, 25, 0.4);
+        }
+        
+        /* Mobile Menu */
+        #menu-toggle {
+            display: none;
+        }
+        
+        #menu-toggle-label {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--text-light);
+        }
+        
+        /* Main Content */
+        main {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            color: var(--text-light);
+        }
+        
+        /* Leaderboard Styles */
+        .leaderboard-container {
+            background: rgba(20, 20, 30, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .leaderboard-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .leaderboard-tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            text-align: center;
+        }
+        
+        .leaderboard-tab:hover {
+            color: var(--secondary-color);
+        }
+        
+        .leaderboard-tab.active {
+            color: var(--secondary-color);
+        }
+        
+        .leaderboard-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .leaderboard-content {
+            display: none;
+        }
+        
+        .leaderboard-content.active {
+            display: block;
+        }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .leaderboard-table th {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+        
+        .leaderboard-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .leaderboard-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .rank {
+            font-weight: bold;
+            width: 60px;
+        }
+        
+        .rank-1, .rank-2, .rank-3 {
+            font-size: 1.2rem;
+        }
+        
+        .rank-1 {
+            color: gold;
+        }
+        
+        .rank-2 {
+            color: silver;
+        }
+        
+        .rank-3 {
+            color: #cd7f32; /* bronze */
+        }
+        
+        .player-name {
+            font-weight: 600;
+        }
+        
+        .player-college {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .score {
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-align: right;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(128, 0, 128, 0.7);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(227, 113, 25, 0.4);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            #desktop-nav {
+                display: none;
+            }
+            
+            #menu-toggle-label {
+                display: block;
+            }
+            
+            .leaderboard-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .leaderboard-container {
+                padding: 1.5rem;
+            }
+            
+            .leaderboard-table th, .leaderboard-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .leaderboard-tabs {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                border-bottom: none;
+            }
+            
+            .leaderboard-tab {
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .leaderboard-tab.active::after {
+                display: none;
+            }
+            
+            .leaderboard-tab.active {
+                background: rgba(227, 113, 25, 0.2);
+                border-radius: 8px;
+            }
+            
+            .player-college {
+                display: none;
+            }
+            
+            .rank {
+                width: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header and Navigation -->
+    <header class="glass-effect">
+        <div class="container">
+            <nav>
+                <a href="landing-page.html" class="logo-font">
+                    VEDAM<span>.</span>
+                </a>
+                <div id="desktop-nav">
+                    <a href="landing-page.html#home">Home</a>
+                    <a href="landing-page.html#venue">Venue</a>
+                    <a href="landing-page.html#events">Events</a>
+                    <a href="landing-page.html#gallery">Gallery</a>
+                    <a href="landing-page.html#team">Team</a>
+                    <a href="landing-page.html#sponsors">Sponsors</a>
+                </div>
+                <a href="landing-page.html#register" class="nav-register-btn">Register Now</a>
+                <label for="menu-toggle" id="menu-toggle-label">
+                    <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </label>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="landing-page.html" class="back-button">← Back to Home</a>
+            <h1 class="page-title">TATVA LEADERBOARD</h1>
+            
+            <div class="leaderboard-container">
+                <div class="leaderboard-tabs">
+                    <div class="leaderboard-tab active" data-tab="hackathon">Hackathon</div>
+                    <div class="leaderboard-tab" data-tab="bug-bounty">Bug Bounty</div>
+                    <div class="leaderboard-tab" data-tab="game-arena">Game Arena</div>
+                </div>
+                
+                <div class="leaderboard-content active" id="hackathon-leaderboard">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Team/Player</th>
+                                <th>College</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="rank rank-1">1</td>
+                                <td class="player-name">Team Innovators</td>
+                                <td class="player-college">MIT College</td>
+                                <td class="score">98</td>
+                            </tr>
+                            <tr>
+                                <td class="rank rank-2">2</td>
+                                <td class="player-name">Code Wizards</td>
+                                <td class="player-college">DY Patil</td>
+                                <td class="score">95</td>
+                            </tr>
+                            <tr>
+                                <td class="rank rank-3">3</td>
+                                <td class="player-name">Tech Titans</td>
+                                <td class="player-college">PICT</td>
+                                <td class="score">92</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">4</td>
+                                <td class="player-name">Binary Beasts</td>
+                                <td class="player-college">COEP</td>
+                                <td class="score">89</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">5</td>
+                                <td class="player-name">Syntax Savants</td>
+                                <td class="player-college">VIT</td>
+                                <td class="score">87</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">6</td>
+                                <td class="player-name">Quantum Coders</td>
+                                <td class="player-college">PICT</td>
+                                <td class="score">85</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">7</td>
+                                <td class="player-name">Byte Brigade</td>
+                                <td class="player-college">MIT</td>
+                                <td class="score">82</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">8</td>
+                                <td class="player-name">Algorithm Aces</td>
+                                <td class="player-college">COEP</td>
+                                <td class="score">80</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">9</td>
+                                <td class="player-name">Data Dynamos</td>
+                                <td class="player-college">DY Patil</td>
+                                <td class="score">78</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">10</td>
+                                <td class="player-name">Logic Legends</td>
+                                <td class="player-college">VIT</td>
+                                <td class="score">75</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="leaderboard-content" id="bug-bounty-leaderboard">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player</th>
+                                <th>College</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="rank rank-1">1</td>
+                                <td class="player-name">Rahul Sharma</td>
+                                <td class="player-college">COEP</td>
+                                <td class="score">87</td>
+                            </tr>
+                            <tr>
+                                <td class="rank rank-2">2</td>
+                                <td class="player-name">Priya Patel</td>
+                                <td class="player-college">VIT</td>
+                                <td class="score">82</td>
+                            </tr>
+                            <tr>
+                                <td class="rank rank-3">3</td>
+                                <td class="player-name">Arjun Mehta</td>
+                                <td class="player-college">PICT</td>
+                                <td class="score">79</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">4</td>
+                                <td class="player-name">Sneha Gupta</td>
+                                <td class="player-college">MIT</td>
+                                <td class="score">76</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">5</td>
+                                <td class="player-name">Vikrant Desai</td>
+                                <td class="player-college">DY Patil</td>
+                                <td class="score">74</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">6</td>
+                                <td class="player-name">Ananya Singh</td>
+                                <td class="player-college">COEP</td>
+                                <td class="score">71</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">7</td>
+                                <td class="player-name">Rohan Joshi</td>
+                                <td class="player-college">PICT</td>
+                                <td class="score">68</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">8</td>
+                                <td class="player-name">Kavita Reddy</td>
+                                <td class="player-college">VIT</td>
+                                <td class="score">65</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">9</td>
+                                <td class="player-name">Aditya Kumar</td>
+                                <td class="player-college">MIT</td>
+                                <td class="score">62</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">10</td>
+                                <td class="player-name">Neha Sharma</td>
+                                <td class="player-college">DY Patil</td>
+                                <td class="score">59</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="leaderboard-content" id="game-arena-leaderboard">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Player</th>
+                                <th>College</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="rank rank-1">1</td>
+                                <td class="player-name">Vikram Singh</td>
+                                <td class="player-college">DY Patil</td>
+                                <td class="score">2450</td>
+                            </tr>
+                            <tr>
+                                <td class="rank rank-2">2</td>
+                                <td class="player-name">Neha Gupta</td>
+                                <td class="player-college">MIT</td>
+                                <td class="score">2380</td>
+                            </tr>
+                            <tr>
+                                <td class="rank rank-3">3</td>
+                                <td class="player-name">Raj Malhotra</td>
+                                <td class="player-college">COEP</td>
+                                <td class="score">2290</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">4</td>
+                                <td class="player-name">Anjali Desai</td>
+                                <td class="player-college">PICT</td>
+                                <td class="score">2180</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">5</td>
+                                <td class="player-name">Karan Patel</td>
+                                <td class="player-college">VIT</td>
+                                <td class="score">2120</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">6</td>
+                                <td class="player-name">Meera Shah</td>
+                                <td class="player-college">MIT</td>
+                                <td class="score">2050</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">7</td>
+                                <td class="player-name">Aryan Kapoor</td>
+                                <td class="player-college">COEP</td>
+                                <td class="score">1980</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">8</td>
+                                <td class="player-name">Divya Sharma</td>
+                                <td class="player-college">DY Patil</td>
+                                <td class="score">1920</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">9</td>
+                                <td class="player-name">Rohit Verma</td>
+                                <td class="player-college">PICT</td>
+                                <td class="score">1870</td>
+                            </tr>
+                            <tr>
+                                <td class="rank">10</td>
+                                <td class="player-name">Pooja Mehta</td>
+                                <td class="player-college">VIT</td>
+                                <td class="score">1810</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+</body>
+</html>
