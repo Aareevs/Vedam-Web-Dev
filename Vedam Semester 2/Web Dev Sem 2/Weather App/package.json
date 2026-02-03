@@ -1,0 +1,17 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "A beautiful weather application using WeatherAPI",
+  "main": "index.js",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "build": "echo 'No build needed for static site'",
+    "start": "python -m http.server 3000"
+  },
+  "keywords": [
+    "weather",
+    "app"
+  ],
+  "author": "",
+  "license": "ISC"
+}

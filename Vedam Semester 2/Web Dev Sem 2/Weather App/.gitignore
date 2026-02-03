@@ -1,0 +1,6 @@
+# Ignore generated files and dependencies
+node_modules/
+.vercel/
+.DS_Store
+*.log
+npm-debug.log*
