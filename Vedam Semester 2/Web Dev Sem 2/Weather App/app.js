@@ -19,6 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function getWeather(city) {
+    // Show loading spinner
+    card.innerHTML = `
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading weather data...</p>
+      </div>
+    `;
+
     const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`;
 
     fetch(url)

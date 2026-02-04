@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Propagation</title>
+    <style>
+        div {
+            min-width: 200px;
+            min-height: 150px;
+            padding : 50px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <b>Event Propogation consists of two phases: Capturing and Bubbling. <br> </b>
+        Capture phase is when the event travels from the root to the target element. <br>
+        Bubble phase is when the event travels from the target element back to the root.
+    </p>
+    <div id="grandparent" style="background-color: blue;":>
+        <div id="parent" style="background-color: red">
+            <div id="child" style="background-color: yellow">
+            </div>
+        </div>
+    </div>
+    
+    <script src ="eventprop.js"></script>
+</body>
+</html>
