@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="mainbox"></div>
+    <script type="text/babel">
+      //select that node
+      const rootEle = document.querySelector("#mainbox");
+      //create element
+
+      let score = 0;
+      let timeLeft = 30;
+      let timerInterval = null;
+      let gameStarted = false;
+      let gameOver = false;
+
+      function startTimer() {
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          document.getElementById("timerDisplay").innerText = timeLeft + "s";
+          
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            gameOver = true;
+            document.getElementById("redbox").style.display = "none";
+            document.getElementById("restartBtn").style.display = "block";
+          }
+        }, 1000);
+      }
+
+      function clickboxGame(){
+        if (gameOver) return;
+        
+        // timer on first click
+        if (!gameStarted) {
+          gameStarted = true;
+          startTimer();
+        }
+
+        const randomTop = Math.floor(Math.random() * 310); // 400 - 50 - 40 (header space)
+        const randomLeft = Math.floor(Math.random() * 150);
+
+        const redBox = document.getElementById("redbox");
+        redBox.style.top = (randomTop + 40) + "px"; // offset for header
+        redBox.style.left = randomLeft + "px";
+        
+        // Increase score
+        score++;
+        document.getElementById("scoreDisplay").innerText = "Score: " + score;
+      }
+
+      function restartGame() {
+        score = 0;
+        timeLeft = 30;
+        gameStarted = false;
+        gameOver = false;
+        
+        document.getElementById("scoreDisplay").innerText = "Score: 0";
+        document.getElementById("timerDisplay").innerText = "30s";
+        document.getElementById("redbox").style.display = "block";
+        document.getElementById("redbox").style.top = "40px";
+        document.getElementById("redbox").style.left = "0px";
+        document.getElementById("restartBtn").style.display = "none";
+      }
+
+      function Game(){
+        //js
+        return <div>
+          <div style={{height:"400px", width:"200px", border:"2px solid black", position:"relative"}}>
+            <div style={{display:"flex", justifyContent:"space-between", padding:"5px", fontWeight:"bold"}}>
+              <span id="scoreDisplay">Score: 0</span>
+              <span id="timerDisplay">30s</span>
+            </div>
+            <div id="redbox" onClick={clickboxGame} style={{height:"50px", width:"50px", backgroundColor:"red", position:"absolute", top:"40px", left:"0px", cursor:"pointer"}}></div>
+            <button id="restartBtn" onClick={restartGame} style={{display:"none", position:"absolute", top:"50%", left:"50%", transform:"translate(-50%, -50%)", padding:"10px 20px", cursor:"pointer", fontSize:"16px"}}>Restart</button>
+          </div>
+          </div>
+      }
+      // ReactDOM.render(child , parent);
+      ReactDOM.render(<Game />, rootEle);
+    </script>
+  </body>
+</html>
