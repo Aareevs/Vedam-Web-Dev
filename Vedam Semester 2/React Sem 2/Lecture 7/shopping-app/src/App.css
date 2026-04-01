@@ -1,0 +1,100 @@
+/* Base */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #eaeded;
+}
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+/* Header */
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Headings */
+h1 {
+  color: black;
+}
+h2 {
+  color: black
+}
+
+/* Card */
+.card {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+}
+
+/* Inputs */
+input {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #a6a6a6;
+  border-radius: 3px;
+}
+
+/* Buttons */
+button {
+  padding: 7px 12px;
+  border-radius: 3px;
+  border: 1px solid #a88734;
+  background: linear-gradient(#f7dfa5, #f0c14b);
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(#f5d78e, #eeb933);
+}
+
+/* Remove */
+.remove-btn {
+  background: #fff;
+  border: 1px solid #d5d9d9;
+  color: black
+}
+
+.qty-btn {
+  background: #f0f2f2;
+  border: 1px solid #d5d9d9;
+  margin: 0 5px;
+  color: black;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 2px solid #ddd;
+}
+
+td {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Summary */
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkout-btn {
+  background: linear-gradient(#ffd814, #f7ca00);
+  border: 1px solid #fcd200;
+}
