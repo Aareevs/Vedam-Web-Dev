@@ -1,14 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-const Chat = () => {
-const param = useParams();
-
-console.log(param.chatId); 
-//chatId is the dynamic part of url provided during Routing.
+function Chat() {
+  const params = useParams();
+  const uniqueId = params.uniqueId || "unknown-user";
 
   return (
-    <div>Chat</div>
+    <div className="p-6 text-xl">Chat page for {uniqueId}</div>
   )
 }
 

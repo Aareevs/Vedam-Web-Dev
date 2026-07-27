@@ -1,25 +1,24 @@
-import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Chat from "./components/Chat";
-import NotFound from "./components/NotFound";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
     <>
-      <h1>Whatsapp Clone</h1>
       <Routes>
-        {/* all routes should be listed here */}
-        
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/chat/:chatId" element={<Chat />}></Route>
-        {/* dynamic route*/}
-        <Route path="*" element={<NotFound />}></Route>
-        {/* all routes/ fallback */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/chat" element={<Navigate to="/chat/demo-user" replace />} />
+        <Route path="/chat/:uniqueId" element={<Chat />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );
 }
 
 export default App;
+
+
