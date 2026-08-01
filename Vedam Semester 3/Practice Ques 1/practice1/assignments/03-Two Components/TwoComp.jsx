@@ -4,7 +4,7 @@ function Display({ count }) {
   return <h2>{count}</h2>;
 }
 
-function Controls({ setCount }) {
+function Controls({setCount}) {
   return (
     <div>
       <button onClick={() => setCount((prev) => prev + 1)}>Increase</button>
