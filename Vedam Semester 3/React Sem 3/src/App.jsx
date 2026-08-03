@@ -48,19 +48,36 @@
 
 // Lec 04
 
-import React from 'react'
-import { Route,Routes } from 'react-router-dom'
-import Home from '../Lec-03/Home'
-import Context from '../Lec-04/Context'
-import A from '../Lec-04/A'
+// import React from 'react'
+// import { Route,Routes } from 'react-router-dom'
+// import Home from '../Lec-03/Home'
+// import Context from '../Lec-04/Context'
+// import A from '../Lec-04/A'
+
+// const App = () => {
+//   return (
+//     <div>
+//       <A/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+// Lec 05
+
+import UseReducerDemo from '../Lec-05/useReducerDemo'
+import ToDoList from '../Lec-05/ToDoList'
 
 const App = () => {
   return (
     <div>
-      <A/>
+      <ToDoList />
+
     </div>
   )
 }
 
 export default App
+
 
