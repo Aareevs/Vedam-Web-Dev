@@ -66,14 +66,31 @@
 
 // Lec 05
 
-import UseReducerDemo from '../Lec-05/useReducerDemo'
-import ToDoList from '../Lec-05/ToDoList'
+// import UseReducerDemo from '../Lec-05/useReducerDemo'
+// import ToDoList from '../Lec-05/ToDoList'
+
+// const App = () => {
+//   return (
+//     <div>
+//       <ToDoList />
+
+//     </div>
+//   )
+// }
+
+// export default App
+
+// Lec 06
+
+import React from 'react'
+import MemoFuncDemo from '../Lec-06/MemoFuncDemo'
+import Child from '../Lec-06/Child'
 
 const App = () => {
   return (
     <div>
-      <ToDoList />
-
+      <MemoFuncDemo/>
+      <Child/>
     </div>
   )
 }
