@@ -82,19 +82,38 @@
 
 // Lec 06
 
+// import React from 'react'
+// import MemoFuncDemo from '../Lec-06/MemoFuncDemo'
+// import Child from '../Lec-06/Child'
+
+// const App = () => {
+//   return (
+//     <div>
+//       <MemoFuncDemo/>
+//       <Child/>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+// Lec 07
+
 import React from 'react'
-import MemoFuncDemo from '../Lec-06/MemoFuncDemo'
-import Child from '../Lec-06/Child'
+import ProductSearch from '../Lec-07/ProductSearch'
 
 const App = () => {
   return (
     <div>
-      <MemoFuncDemo/>
-      <Child/>
+      <h1>Product Search</h1>
+      <ProductSearch />
     </div>
   )
 }
 
 export default App
+
+
 
 
