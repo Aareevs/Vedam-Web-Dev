@@ -1,5 +1,6 @@
+// 1st Example AND REMEMBER~!!! ->> **Run node index.js in terminal to see the output**
+
 // const fs = require('fs');
-// import fs from 'fs'
 
 /*
 Explanation:
@@ -16,23 +17,25 @@ Explanation:
 
 //  2nd Example
 
-// console.log("1")
+// const fs = require('fs');
 
-// fs.writeFile("home.txt","gujju",()=>{
-//     console.log("Fixkaru");
-// })
+//  console.log("1")
 
-// console.log("2")
-// console.log("A")
-// fs.unlink("home.txt",()=>{
-//     console.log("File Deleted")
-// })
+//  fs.writeFile("home.txt","gujju",()=>{
+//      console.log("Fixkaru");
+//  })
+
+//  console.log("2")
+//  console.log("A")
+//  fs.unlink("home.txt",()=>{
+//      console.log("File Deleted")
+//  })
 
 
 // 3rd Example
 // Creating then deleteing Folder and file inside it
 
-const fs=require('fs')
-fs.mkdirSync("newFolder")
-fs.writeFileSync("newFolder/index.html", "hola amigo")
-fs.rmSync("newFolder",{recursive:true})
+//  const fs=require('fs')
+//  fs.mkdirSync("newFolder")
+//  fs.writeFileSync("newFolder/index.html", "hola amigo")
+//  fs.rmSync("newFolder",{recursive:true}) 
